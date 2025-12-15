@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/bg_grey">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tambahitem"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_dark"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_kode_manual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Atur Kode Secara Manual"
+            android:textColor="@color/primary_blue"
+            android:textStyle="bold"
+            android:checked="true"
+            android:layout_marginBottom="16dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="#F0F0F0">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView android:text="Kode Item" android:textColor="@color/primary_blue" android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="4dp"/>
+                <EditText
+                    android:id="@+id/et_kode_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Kode Item"
+                    android:padding="12dp"
+                    android:background="@drawable/bg_input_field"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView android:text="Nama Item" android:textColor="@color/primary_blue" android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="4dp"/>
+                <EditText
+                    android:id="@+id/et_nama_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Nama Item"
+                    android:padding="12dp"
+                    android:background="@drawable/bg_input_field"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView android:text="Berat Item" android:textColor="@color/primary_blue" android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="4dp"/>
+                <EditText
+                    android:id="@+id/et_berat_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="kg/g"
+                    android:inputType="numberDecimal"
+                    android:padding="12dp"
+                    android:background="@drawable/bg_input_field"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView android:text="Jenis" android:textColor="@color/primary_blue" android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="4dp"/>
+                <EditText
+                    android:id="@+id/et_jenis_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Jenis Item"
+                    android:padding="12dp"
+                    android:background="@drawable/bg_input_field"
+                    android:layout_marginBottom="12dp"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_jumlah_manual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Atur Jumlah Secara manual"
+            android:textColor="@color/primary_blue"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_input_field"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="8dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:text="Jumlah Produk"
+                    android:textSize="12sp"
+                    android:textColor="@color/primary_blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <EditText
+                    android:id="@+id/et_jumlah_produk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:background="@null"
+                    android:textSize="18sp"
+                    android:inputType="number"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/btn_qty_up"
+                    android:layout_width="32dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_launcher_foreground"
+                    android:rotation="90"
+                    app:tint="@color/text_grey"/> <ImageView
+                android:id="@+id/btn_qty_down"
+                android:layout_width="32dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_launcher_foreground"
+                android:rotation="270"
+                app:tint="@color/text_grey"/> </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_dynamic_inputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/btn_add_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+ Tambah Deskripsi"
+            android:gravity="center"
+            android:padding="12dp"
+            android:textStyle="bold"
+            android:textColor="@color/text_dark"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/btn_simpan_persediaan"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Tambah Persediaan"
+            android:backgroundTint="@color/primary_blue"
+            app:cornerRadius="20dp"/>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

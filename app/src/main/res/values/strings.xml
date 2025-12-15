@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">GudangKu</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="notifikasi">Notifikasi/log</string>
+    <string name="daftargudang">Daftar Gudang</string>
+    <string name="deskripsigudang">Deskripsi Gudang</string>
+    <string name="editgudang">Edit Gudang</string>
+    <string name="tambahgudang">Tambah Gudang</string>
+    <string name="tambahitem">Tambah Item"</string>
+    <string name="masuk">Barang Masuk</string>
+    <string name="keluar">Barang Keluar</string>
+    <string name="deskripsiitem">Deskripsi Item</string>
+    <string name="edititem">Edit Item</string>
+    <string name="persediaan">Persediaan</string>
+    <string name="qr">Scan QR produk</string>
+    <string name="riwayat">Riwayat"</string>
+</resources>
