@@ -1,58 +1,65 @@
 package com.example.gudangku
 
 import android.os.Bundle
-import android.widget.*
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 
-class EditItemActivity : AppCompatActivity() {
+class EditGudangActivity : AppCompatActivity() {
 
-    private lateinit var layoutDynamicInputs: LinearLayout
-    private lateinit var etKodeItem: EditText
-    private lateinit var switchManual: Switch
+    lateinit var layoutDynamicInputs: LinearLayout
+    val dynamicEditTexts = mutableListOf<EditText>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_item)
+        setContentView(R.layout.activity_edit_gudang)
 
-        etKodeItem = findViewById(R.id.et_kode_item)
-        switchManual = findViewById(R.id.switch_manual_code)
         layoutDynamicInputs = findViewById(R.id.layout_dynamic_inputs)
+        val btnAddDesc = findViewById<TextView>(R.id.btn_add_description_field)
+        val btnSimpan = findViewById<TextView>(R.id.btn_simpan_perubahan)
 
-        switchManual.setOnCheckedChangeListener { _, isChecked ->
-            etKodeItem.isEnabled = isChecked
-
-            if (isChecked) {
-                etKodeItem.alpha = 1.0f
-            } else {
-                etKodeItem.alpha = 0.5f
-            }
-        }
-
-        findViewById<TextView>(R.id.btn_add_description).setOnClickListener {
+        btnAddDesc.setOnClickListener {
             addNewDescriptionField()
         }
 
-        findViewById<ImageView>(R.id.btn_back).setOnClickListener { finish() }
-
-        findViewById<Button>(R.id.btn_simpan).setOnClickListener {
-            Toast.makeText(this, "Data Item Disimpan!", Toast.LENGTH_SHORT).show()
-            finish()
+        btnSimpan.setOnClickListener {
+            saveData()
         }
+
+        findViewById<ImageView>(R.id.btn_back).setOnClickListener { finish() }
     }
 
     private fun addNewDescriptionField() {
         val newEditText = EditText(this)
         val params = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT, 150
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            150
         )
         params.setMargins(0, 0, 0, 30)
         newEditText.layoutParams = params
+
         newEditText.hint = "Deskripsi Tambahan..."
         newEditText.setPadding(30, 30, 30, 30)
         newEditText.background = ContextCompat.getDrawable(this, R.drawable.bg_input_field)
         newEditText.textSize = 14f
 
         layoutDynamicInputs.addView(newEditText)
+        dynamicEditTexts.add(newEditText)
+    }
+
+    private fun saveData() {
+        val allDescriptions = StringBuilder()
+
+        for (editText in dynamicEditTexts) {
+            val text = editText.text.toString()
+            if (text.isNotEmpty()) {
+                allDescriptions.append(text).append("\n")
+            }
+        }
+        Toast.makeText(this, "Data Disimpan:\n$allDescriptions", Toast.LENGTH_LONG).show()
     }
 }

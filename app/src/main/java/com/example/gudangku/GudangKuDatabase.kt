@@ -12,7 +12,7 @@ import androidx.room.RoomDatabase
         TablePersediaan::class,
         TableRiwayat::class
     ],
-    version = 1
+    version = 2
 )
 abstract class GudangKuDatabase : RoomDatabase() {
 
@@ -31,7 +31,9 @@ abstract class GudangKuDatabase : RoomDatabase() {
                     context.applicationContext,
                     GudangKuDatabase::class.java,
                     "gudangku_db"
-                ).build().also { INSTANCE = it }
+                )
+                    .fallbackToDestructiveMigration()
+                    .build().also { INSTANCE = it }
             }
         }
     }
