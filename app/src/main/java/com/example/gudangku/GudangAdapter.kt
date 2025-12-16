@@ -9,10 +9,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-data class Gudang(val nama: String, val alamat: String)
+class GudangAdapter(
+    private val context: Context
+) : RecyclerView.Adapter<GudangAdapter.GudangViewHolder>() {
 
-class GudangAdapter(private val context: Context, private val listGudang: List<Gudang>) :
-    RecyclerView.Adapter<GudangAdapter.GudangViewHolder>() {
+    private var listGudang = listOf<TableGudang>()
 
     class GudangViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvNama: TextView = itemView.findViewById(R.id.tv_nama_gudang)
@@ -21,20 +22,28 @@ class GudangAdapter(private val context: Context, private val listGudang: List<G
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GudangViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_gudang, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_gudang, parent, false)
         return GudangViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: GudangViewHolder, position: Int) {
         val item = listGudang[position]
-        holder.tvNama.text = item.nama
-        holder.tvAlamat.text = item.alamat
+
+        holder.tvNama.text = item.namaGudang
+        holder.tvAlamat.text = item.lokasiGudang
 
         holder.btnInfo.setOnClickListener {
             val intent = Intent(context, DeskripsiGudangActivity::class.java)
+            intent.putExtra("ID_GUDANG", item.idGudang)
             context.startActivity(intent)
         }
     }
 
-    override fun getItemCount() = listGudang.size
+    override fun getItemCount(): Int = listGudang.size
+
+    fun updateData(newList: List<TableGudang>) {
+        listGudang = newList
+        notifyDataSetChanged()
+    }
 }
