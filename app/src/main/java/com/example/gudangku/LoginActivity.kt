@@ -6,47 +6,74 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var session: SessionManager
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        session = SessionManager(this)
-
-        if (session.isLoggedIn()) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-            return
-        }
-
         setContentView(R.layout.activity_login)
 
-        val btnLogin = findViewById<Button>(R.id.btnLogin)
-        val etEmail = findViewById<EditText>(R.id.etEmail)
+        val etLogin = findViewById<EditText>(R.id.etLogin)
         val etPassword = findViewById<EditText>(R.id.etPassword)
+        val btnLogin = findViewById<Button>(R.id.btnLogin)
         val btnRegisterNav = findViewById<Button>(R.id.btnRegisterNav)
 
-        btnLogin.setOnClickListener {
-            val email = etEmail.text.toString()
-            val password = etPassword.text.toString()
+        val session = SessionManager(this)
+        if (session.isLoggedIn()) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
 
-            if (email.isNotEmpty() && password.isNotEmpty()) {
-                session.createLoginSession("Aditya Permana")
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                Toast.makeText(this, "Email dan Password wajib diisi!", Toast.LENGTH_SHORT).show()
+        btnLogin.setOnClickListener {
+
+            val input = etLogin.text.toString().trim()
+            val password = etPassword.text.toString().trim()
+
+            if (input.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Data tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            lifecycleScope.launch {
+                val db = GudangKuDatabase.getInstance(this@LoginActivity)
+                val user = db.userDao().login(input, password)
+
+                runOnUiThread {
+                    if (user != null) {
+
+                        // ✅ BUAT SESSION DI SINI
+                        session.createLoginSession(
+                            user.id,
+                            user.username,
+                            user.email
+                        )
+
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Login berhasil",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        startActivity(
+                            Intent(this@LoginActivity, MainActivity::class.java)
+                        )
+                        finish()
+
+                    } else {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Username/Email atau password salah",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
             }
         }
 
         btnRegisterNav.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 }

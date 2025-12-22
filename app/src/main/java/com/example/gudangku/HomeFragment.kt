@@ -8,80 +8,152 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.collect
 
 class HomeFragment : Fragment() {
 
-    // Deklarasi SessionManager (Opsional ditaruh global, tapi di dalam onViewCreated lebih aman untuk Fragment)
-    // private lateinit var session: SessionManager
+    private lateinit var session: SessionManager
+    private lateinit var db: GudangKuDatabase
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // ==========================================
-        // 1. INISIALISASI SESSION MANAGER
-        // ==========================================
-        val session = SessionManager(requireContext())
+        session = SessionManager(requireContext())
+        db = GudangKuDatabase.getInstance(requireContext())
 
-        // ==========================================
-        // 2. LOGIC PROFILE (Username & Klik)
-        // ==========================================
-        val tvUsername = view.findViewById<TextView>(R.id.tv_username)
-        val imgProfile = view.findViewById<ImageView>(R.id.img_profile) // Tambahan biar gambar juga bisa diklik
-
-        // Set nama user dari Session (menggantikan "Aditya Permana" static di XML)
-        tvUsername.text = session.getUsername()
-
-        // Bikin listener biar bisa dipake di teks maupun gambar
-        val openProfileListener = View.OnClickListener {
-            val intent = Intent(requireContext(), ProfileActivity::class.java)
-            startActivity(intent)
+        if (!session.isLoggedIn()) {
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            requireActivity().finish()
+            return
         }
 
-        // Pasang listener klik
-        tvUsername.setOnClickListener(openProfileListener)
-        imgProfile.setOnClickListener(openProfileListener)
+        // ================= VIEW =================
+        val tvUsername = view.findViewById<TextView>(R.id.tv_username)
+        val tvNamaGudang = view.findViewById<TextView>(R.id.tv_nama_gudang)
+        val tvAlamatGudang = view.findViewById<TextView>(R.id.tv_alamat_gudang)
 
+        val tvBarangMasuk = view.findViewById<TextView>(R.id.tv_barang_masuk)
+        val tvBarangKeluar = view.findViewById<TextView>(R.id.tv_barang_keluar)
+        val tvTotalBarang = view.findViewById<TextView>(R.id.tv_total_barang)
+        val tvTotalBerat = view.findViewById<TextView>(R.id.tv_total_berat)
 
-        // ==========================================
-        // 3. LOGIC RECYCLERVIEW (Kode Lamamu)
-        // ==========================================
         val rvBarang = view.findViewById<RecyclerView>(R.id.rv_barang)
-        val listBarang = listOf(
-            Barang("Beras Bulog 5Kg", "R1L1-1", "5kg/item", 13, "karung"),
-            Barang("Tanggo Kaleng", "R1L1-2", "350g/item", 32, "Box"),
-            Barang("Haruna Biscuit", "R2L2-5", "200g/item", 0, "Box")
+        rvBarang.layoutManager = LinearLayoutManager(requireContext())
+
+        tvUsername.text = session.getDisplayName()
+
+        // ================= LOAD DATA =================
+        loadHomeData(
+            tvNamaGudang,
+            tvAlamatGudang,
+            tvBarangMasuk,
+            tvBarangKeluar,
+            tvTotalBarang,
+            tvTotalBerat,
+            rvBarang
         )
 
-        rvBarang.layoutManager = LinearLayoutManager(requireContext())
-        rvBarang.adapter = BarangAdapter(requireContext(), listBarang)
-
-
-        // ==========================================
-        // 4. LOGIC TOMBOL LAINNYA (Kode Lamamu)
-        // ==========================================
-        view.findViewById<ImageView>(R.id.btn_ganti_gudang)?.setOnClickListener {
+        // ================= NAV =================
+        view.findViewById<ImageView>(R.id.btn_ganti_gudang).setOnClickListener {
             startActivity(Intent(requireContext(), DaftarGudangActivity::class.java))
         }
+    }
 
-        view.findViewById<ImageView>(R.id.btn_notif)?.setOnClickListener {
-            startActivity(Intent(requireContext(), NotifikasiActivity::class.java))
+    override fun onResume() {
+        super.onResume()
+        view?.let {
+            loadHomeData(
+                it.findViewById(R.id.tv_nama_gudang),
+                it.findViewById(R.id.tv_alamat_gudang),
+                it.findViewById(R.id.tv_barang_masuk),
+                it.findViewById(R.id.tv_barang_keluar),
+                it.findViewById(R.id.tv_total_barang),
+                it.findViewById(R.id.tv_total_berat),
+                it.findViewById(R.id.rv_barang)
+            )
+        }
+    }
+
+    private fun loadHomeData(
+        tvNamaGudang: TextView,
+        tvAlamatGudang: TextView,
+        tvBarangMasuk: TextView,
+        tvBarangKeluar: TextView,
+        tvTotalBarang: TextView,
+        tvTotalBerat: TextView,
+        rvBarang: RecyclerView
+    ) {
+        lifecycleScope.launch {
+            val idGudang = session.getGudangAktifId()
+
+            val gudang = db.gudangDao().getById(idGudang)
+            val summary = db.persediaanDao().getHomeSummary(idGudang)
+
+            if (gudang == null) {
+                withContext(Dispatchers.Main) {
+                    tvNamaGudang.text = "Belum ada gudang"
+                    tvAlamatGudang.text = "Silakan pilih gudang"
+                }
+                return@launch
+            }
+
+            // 🔥 COLLECT FLOW
+            db.persediaanDao()
+                .getPersediaanByGudang(idGudang)
+                .collect { listBarang ->
+
+                    withContext(Dispatchers.Main) {
+                        tvNamaGudang.text = gudang.namaGudang
+                        tvAlamatGudang.text =
+                            "${gudang.lokasiGudang}\n${gudang.kodeGudang}"
+
+                        tvBarangMasuk.text = summary.barangMasuk.toString()
+                        tvBarangKeluar.text = summary.barangKeluar.toString()
+                        tvTotalBarang.text = summary.totalBarang.toString()
+                        tvTotalBerat.text =
+                            String.format("%.2f Kg", summary.totalBerat ?: 0.0)
+
+                        rvBarang.adapter = PersediaanAdapter(
+                            requireContext(),
+                            listBarang.toMutableList() // ✅ AMAN
+                        )
+                    }
+                }
         }
 
-        view.findViewById<View>(R.id.card_barang_masuk)?.setOnClickListener {
-            startActivity(Intent(requireContext(), BarangMasukActivity::class.java))
-        }
+    }
 
-        view.findViewById<View>(R.id.card_barang_keluar)?.setOnClickListener {
-            startActivity(Intent(requireContext(), BarangKeluarActivity::class.java))
-        }
+    private fun showEmptyState(
+        tvNamaGudang: TextView,
+        tvAlamatGudang: TextView,
+        tvBarangMasuk: TextView,
+        tvBarangKeluar: TextView,
+        tvTotalBarang: TextView,
+        tvTotalBerat: TextView,
+        rvBarang: RecyclerView
+    ) {
+        tvNamaGudang.text = "Belum ada gudang"
+        tvAlamatGudang.text = "Silakan pilih gudang"
+
+        tvBarangMasuk.text = "0"
+        tvBarangKeluar.text = "0"
+        tvTotalBarang.text = "0"
+        tvTotalBerat.text = "0 Kg"
+
+        rvBarang.adapter = PersediaanAdapter(requireContext(), mutableListOf())
     }
 }

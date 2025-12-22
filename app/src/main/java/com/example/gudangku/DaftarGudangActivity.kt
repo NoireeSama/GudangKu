@@ -18,6 +18,7 @@ class DaftarGudangActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_daftar_gudang)
+        val session = SessionManager(this)
 
         db = GudangKuDatabase.getInstance(this)
 

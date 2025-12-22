@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 class GudangAdapter(
@@ -15,7 +16,7 @@ class GudangAdapter(
 
     private var listGudang = listOf<TableGudang>()
 
-    class GudangViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class GudangViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvNama: TextView = itemView.findViewById(R.id.tv_nama_gudang)
         val tvAlamat: TextView = itemView.findViewById(R.id.tv_alamat)
         val btnInfo: ImageView = itemView.findViewById(R.id.btn_info)
@@ -31,14 +32,38 @@ class GudangAdapter(
         val item = listGudang[position]
 
         holder.tvNama.text = item.namaGudang
-        holder.tvAlamat.text = item.lokasiGudang
+        holder.tvAlamat.text =
+            "${item.lokasiGudang}\n${item.kodeGudang}"
 
+        // ✅ PILIH GUDANG
+        holder.itemView.setOnClickListener {
+            val session = SessionManager(context)
+            session.setActiveGudang(
+                item.idGudang,
+                item.namaGudang,
+                item.kodeGudang
+            )
+
+            Toast.makeText(
+                context,
+                "Gudang ${item.namaGudang} dipilih",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            // 🔥 KUNCI UTAMA
+            if (context is DaftarGudangActivity) {
+                context.finish()
+            }
+        }
+
+        // INFO BUTTON
         holder.btnInfo.setOnClickListener {
             val intent = Intent(context, DeskripsiGudangActivity::class.java)
             intent.putExtra("ID_GUDANG", item.idGudang)
             context.startActivity(intent)
         }
     }
+
 
     override fun getItemCount(): Int = listGudang.size
 
