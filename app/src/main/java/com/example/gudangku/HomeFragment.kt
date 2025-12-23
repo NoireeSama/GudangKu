@@ -68,6 +68,14 @@ class HomeFragment : Fragment() {
         )
 
         // ================= NAV =================
+        view.findViewById<View>(R.id.btnHalamanUser).setOnClickListener {
+            startActivity(Intent(requireContext(), ProfileActivity::class.java)
+            )
+        }
+        view.findViewById<ImageView>(R.id.btn_notif).setOnClickListener {
+            startActivity(Intent(requireContext(), NotifikasiActivity::class.java)
+            )
+        }
         view.findViewById<ImageView>(R.id.btn_ganti_gudang).setOnClickListener {
             startActivity(Intent(requireContext(), DaftarGudangActivity::class.java))
         }
@@ -125,7 +133,7 @@ class HomeFragment : Fragment() {
                         tvBarangKeluar.text = summary.barangKeluar.toString()
                         tvTotalBarang.text = summary.totalBarang.toString()
                         tvTotalBerat.text =
-                            String.format("%.2f Kg", summary.totalBerat ?: 0.0)
+                            String.format("%.2f Gram", summary.totalBerat ?: 0.0)
 
                         rvBarang.adapter = PersediaanAdapter(
                             requireContext(),

@@ -8,8 +8,10 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.core.graphics.toColorInt
+import java.text.SimpleDateFormat
+import java.util.*
 
-class LogAdapter(private val listLog: List<LogNotifikasi>) :
+class LogAdapter(private val listLog: List<RiwayatBarang>) :
     RecyclerView.Adapter<LogAdapter.LogViewHolder>() {
 
     class LogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -21,38 +23,63 @@ class LogAdapter(private val listLog: List<LogNotifikasi>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_log, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_log, parent, false)
         return LogViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
         val item = listLog[position]
 
-        holder.tvJudul.text = item.judul
-        holder.tvDesc.text = item.deskripsi
-        holder.tvWaktu.text = item.waktu
+        holder.tvJudul.text = when (item.jenis) {
+            "MASUK" -> "Barang Masuk"
+            "KELUAR" -> "Barang Keluar"
+            "EDIT" -> "Edit Stok"
+            else -> "Aktivitas"
+        }
 
-        when (item.tipe) {
-            "MASUK" -> {
-                holder.cardIcon.setCardBackgroundColor("#E8F5E9".toColorInt())
-                holder.imgIcon.setColorFilter("#2E7D32".toColorInt())
-                holder.imgIcon.setImageResource(R.drawable.ic_add)
-            }
-            "KELUAR" -> {
-                holder.cardIcon.setCardBackgroundColor("#FFEBEE".toColorInt())
-                holder.imgIcon.setColorFilter("#C62828".toColorInt())
-                holder.imgIcon.setImageResource(R.drawable.ic_launcher_foreground)
-                holder.imgIcon.rotation = 90f
-            }
-            "EDIT" -> {
-                // Oranye / Biru
-                holder.cardIcon.setCardBackgroundColor("#E3F2FD".toColorInt())
-                holder.imgIcon.setColorFilter("#1565C0".toColorInt())
-                holder.imgIcon.setImageResource(R.drawable.ic_launcher_foreground)
-                holder.imgIcon.rotation = 0f
-            }
+        holder.tvDesc.text = when (item.jenis) {
+            "MASUK" ->
+                "+${item.jumlah} ${item.namaBarang}\n" +
+                        "Gudang: ${item.namaGudang}\n" +
+                        "Oleh: ${item.namaUser}"
+
+            "KELUAR" ->
+                "+${item.jumlah} ${item.namaBarang}\n" +
+                        "Gudang: ${item.namaGudang}\n" +
+                        "Oleh: ${item.namaUser}"
+
+            "EDIT" ->
+                "+${item.jumlah} ${item.namaBarang}\n" +
+                        "Gudang: ${item.namaGudang}\n" +
+                        "Oleh: ${item.namaUser}\n"
+
+            else ->
+                item.namaBarang
+        }
+
+
+
+
+        holder.tvWaktu.text = formatWaktu(item.tanggal)
+
+        when (item.jenis) {
+            "MASUK" -> setIcon(holder, "#E8F5E9", "#2E7D32")
+            "KELUAR" -> setIcon(holder, "#FFEBEE", "#C62828")
+            "EDIT" -> setIcon(holder, "#E3F2FD", "#1565C0")
         }
     }
 
     override fun getItemCount() = listLog.size
+
+    private fun setIcon(holder: LogViewHolder, bg: String, icon: String) {
+        holder.cardIcon.setCardBackgroundColor(bg.toColorInt())
+        holder.imgIcon.setColorFilter(icon.toColorInt())
+        holder.imgIcon.setImageResource(R.drawable.ic_add)
+    }
+
+    private fun formatWaktu(time: Long): String {
+        val sdf = java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault())
+        return sdf.format(java.util.Date(time))
+    }
 }

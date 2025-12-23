@@ -10,7 +10,9 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class PersediaanAdapter(
     private val context: Context,
@@ -50,14 +52,12 @@ class PersediaanAdapter(
             ContextCompat.getColor(context, colorResId)
         )
 
-        // ✅ KLIK DETAIL
         holder.cardRoot.setOnClickListener {
             val intent = Intent(context, DeskripsiItemActivity::class.java)
             intent.putExtra("ID_PERSEDIAAN", item.idPersediaan)
             context.startActivity(intent)
         }
 
-        // ➕ SIMPAN KE DB
         holder.btnPlus.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 db.persediaanDao().updateStok(
@@ -80,4 +80,11 @@ class PersediaanAdapter(
     }
 
     override fun getItemCount() = listBarang.size
+
+    // 🔥 INI KUNCI UTAMANYA
+    fun updateData(newData: List<PersediaanDetail>) {
+        listBarang.clear()
+        listBarang.addAll(newData)
+        notifyDataSetChanged()
+    }
 }

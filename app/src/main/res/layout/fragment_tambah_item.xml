@@ -74,7 +74,7 @@
                     android:id="@+id/et_berat_item"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:hint="kg/g"
+                    android:hint="Gram"
                     android:inputType="numberDecimal"
                     android:padding="12dp"
                     android:background="@drawable/bg_input_field"

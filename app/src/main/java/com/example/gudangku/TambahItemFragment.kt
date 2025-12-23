@@ -144,6 +144,20 @@ class TambahItemFragment : Fragment() {
                     )
                 )
 
+                val sessionManager = SessionManager(requireContext())
+                val namaGudang = sessionManager.getGudangNama() ?: "Gudang"
+                val namaUser = sessionManager.getDisplayName()
+                db.riwayatDao().insert(
+                    TableRiwayat(
+                        idBarang = barangId,
+                        idGudang = gudangId,
+                        jenis = "MASUK",
+                        jumlah = jumlah,
+                        namaGudang = namaGudang,
+                        namaUser = namaUser
+                    )
+                )
+
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         requireContext(),

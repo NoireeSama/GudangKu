@@ -14,7 +14,7 @@ import androidx.room.RoomDatabase
         TableRiwayat::class
 
     ],
-    version = 4
+    version = 6
 )
 abstract class GudangKuDatabase : RoomDatabase() {
 

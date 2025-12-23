@@ -8,10 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class PersediaanFragment : Fragment() {
+
+    private lateinit var adapter: PersediaanAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,29 +28,23 @@ class PersediaanFragment : Fragment() {
         val rv = view.findViewById<RecyclerView>(R.id.rv_persediaan)
         rv.layoutManager = LinearLayoutManager(requireContext())
 
+        adapter = PersediaanAdapter(
+            requireContext(),
+            mutableListOf()
+        )
+        rv.adapter = adapter
+
         val session = SessionManager(requireContext())
         val db = GudangKuDatabase.getInstance(requireContext())
-
         val idGudang = session.getGudangAktifId()
 
-        // 🚫 BELUM PILIH GUDANG
-        if (idGudang == -1) {
-            rv.adapter = PersediaanAdapter(
-                requireContext(),
-                mutableListOf()
-            )
-            return
-        }
+        if (idGudang == -1) return
 
-        // 🔥 AMBIL BARANG BERDASARKAN GUDANG AKTIF
         lifecycleScope.launch {
             db.persediaanDao()
                 .getPersediaanByGudang(idGudang)
                 .collect { listBarang ->
-                    rv.adapter = PersediaanAdapter(
-                        requireContext(),
-                        listBarang.toMutableList()
-                    )
+                    adapter.updateData(listBarang)
                 }
         }
     }
