@@ -11,5 +11,7 @@ data class TableRiwayat(
     val idGudang: Int,
     val jenis: String, // MASUK / KELUAR / EDIT
     val jumlah: Int,
-    val tanggal: Long = System.currentTimeMillis()
+    val tanggal: Long = System.currentTimeMillis(),
+    val namaGudang: String,
+    val namaUser: String
 )

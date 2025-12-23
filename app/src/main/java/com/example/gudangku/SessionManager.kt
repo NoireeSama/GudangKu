@@ -4,30 +4,79 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class SessionManager(context: Context) {
-    private val prefs: SharedPreferences = context.getSharedPreferences("WMS_PREFS", Context.MODE_PRIVATE)
-    private val editor: SharedPreferences.Editor = prefs.edit()
+
+    private val prefs: SharedPreferences =
+        context.getSharedPreferences("WMS_PREFS", Context.MODE_PRIVATE)
 
     companion object {
         const val KEY_IS_LOGGED_IN = "is_logged_in"
+        const val KEY_USER_ID = "user_id"
         const val KEY_USERNAME = "username"
+        const val KEY_EMAIL = "email"
+
+        const val KEY_GUDANG_ID = "gudang_id"
+        const val KEY_GUDANG_NAMA = "gudang_nama"
+        const val KEY_GUDANG_KODE = "gudang_kode"
     }
 
-    fun createLoginSession(username: String) {
-        editor.putBoolean(KEY_IS_LOGGED_IN, true)
-        editor.putString(KEY_USERNAME, username)
-        editor.apply()
+
+    fun createLoginSession(
+        userId: Int,
+        username: String,
+        email: String
+    ) {
+        prefs.edit()
+            .putBoolean(KEY_IS_LOGGED_IN, true)
+            .putInt(KEY_USER_ID, userId)
+            .putString(KEY_USERNAME, username)
+            .putString(KEY_EMAIL, email)
+            .apply()
     }
 
-    fun isLoggedIn(): Boolean {
-        return prefs.getBoolean(KEY_IS_LOGGED_IN, false)
-    }
+    fun isLoggedIn(): Boolean =
+        prefs.getBoolean(KEY_IS_LOGGED_IN, false)
+
+    fun getUserId(): Int =
+        prefs.getInt(KEY_USER_ID, -1)
+
+    fun getUsername(): String? =
+        prefs.getString(KEY_USERNAME, null)
+
+    fun getEmail(): String? =
+        prefs.getString(KEY_EMAIL, null)
+
+    fun getDisplayName(): String =
+        getUsername() ?: getEmail() ?: "User"
 
     fun logout() {
-        editor.clear()
-        editor.commit()
+        prefs.edit().clear().apply()
     }
 
-    fun getUsername(): String? {
-        return prefs.getString(KEY_USERNAME, "User")
+    fun setActiveGudang(
+        gudangId: Int,
+        namaGudang: String,
+        kodeGudang: String
+    ) {
+        prefs.edit()
+            .putInt(KEY_GUDANG_ID, gudangId)
+            .putString(KEY_GUDANG_NAMA, namaGudang)
+            .putString(KEY_GUDANG_KODE, kodeGudang)
+            .apply()
+    }
+
+    fun hasActiveGudang(): Boolean =
+        prefs.contains(KEY_GUDANG_ID)
+
+    fun getGudangNama(): String? =
+        prefs.getString(KEY_GUDANG_NAMA, null)
+
+    fun getGudangKode(): String? =
+        prefs.getString(KEY_GUDANG_KODE, null)
+
+    fun getGudangId(): Int =
+        prefs.getInt(KEY_GUDANG_ID, -1)
+
+    fun getGudangAktifId(): Int {
+        return prefs.getInt(KEY_GUDANG_ID, -1)
     }
 }

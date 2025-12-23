@@ -7,15 +7,18 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [
+        TableUser::class,
         TableGudang::class,
         TableBarang::class,
         TablePersediaan::class,
         TableRiwayat::class
+
     ],
-    version = 2
+    version = 6
 )
 abstract class GudangKuDatabase : RoomDatabase() {
 
+    abstract fun userDao(): UserDao
     abstract fun gudangDao(): GudangDao
     abstract fun barangDao(): BarangDao
     abstract fun persediaanDao(): PersediaanDao

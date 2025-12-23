@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -13,16 +12,19 @@
         android:orientation="vertical"
         android:padding="24dp">
 
+        <!-- HEADER -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp">
+
             <ImageView
                 android:id="@+id/btn_back"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_back"
-                app:tint="@color/text_dark"/>
+                app:tint="@color/text_dark" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -30,9 +32,10 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_centerInParent="true"
-                android:textColor="@color/text_dark"/>
+                android:textColor="@color/text_dark" />
         </RelativeLayout>
 
+        <!-- CARD DETAIL -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,42 +49,70 @@
                 android:orientation="vertical"
                 android:padding="24dp">
 
+                <!-- NAMA BARANG -->
                 <TextView
+                    android:id="@+id/tv_nama_barang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tanggo Kaleng"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:textColor="@color/text_dark"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="16dp"/>
+                    android:layout_marginBottom="16dp" />
 
+                <!-- PLACEHOLDER IMAGE -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
+                    android:layout_height="160dp"
                     app:cardCornerRadius="16dp"
                     app:cardBackgroundColor="@color/primary_blue"
-                    android:layout_marginBottom="24dp">
-                </androidx.cardview.widget.CardView>
+                    android:layout_marginBottom="20dp" />
 
+                <!-- INFO STOK -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/tv_stok"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="32sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_blue" />
+
+                    <TextView
+                        android:id="@+id/tv_satuan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_grey" />
+                </LinearLayout>
+
+                <!-- DETAIL TEKS -->
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_detail_barang"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
+                    android:lineSpacingExtra="6dp"
                     android:textColor="@color/text_dark"
-                    android:lineSpacingExtra="4dp"
-                    android:text="Kode: M-TK-0001\nJenis: Makanan\nJumlah: 32 Box\nIsi Per Box: 6 Kaleng\nIsi Per Liter: ...\nBerat Per Item: 350g\nBerat Box: 1.2kg\nBerat Total: 67.7kg"/>
+                    android:layout_marginBottom="24dp" />
 
+                <!-- EDIT -->
                 <Button
                     android:id="@+id/btn_edit_persediaan"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="56dp"
                     android:text="Edit Persediaan"
                     android:textAllCaps="false"
                     android:textSize="16sp"
-                    android:layout_marginTop="24dp"
                     android:backgroundTint="@color/primary_blue"
-                    app:cornerRadius="20dp"/>
+                    app:cornerRadius="20dp" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

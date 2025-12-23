@@ -19,7 +19,7 @@ interface GudangDao {
     suspend fun getAll(): List<TableGudang>
 
     @Query("SELECT * FROM gudang WHERE idGudang = :id")
-    suspend fun getById(id: Int): TableGudang
+    suspend fun getById(id: Int): TableGudang?
 
     @Query("SELECT * FROM gudang ORDER BY idGudang DESC")
     fun getAllGudang(): Flow<List<TableGudang>>

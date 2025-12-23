@@ -10,9 +10,16 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class PersediaanAdapter(private val context: Context, private val listBarang: MutableList<Barang>) :
-    RecyclerView.Adapter<PersediaanAdapter.PersediaanViewHolder>() {
+class PersediaanAdapter(
+    private val context: Context,
+    private val listBarang: MutableList<PersediaanDetail>
+) : RecyclerView.Adapter<PersediaanAdapter.PersediaanViewHolder>() {
+
+    private val db = GudangKuDatabase.getInstance(context)
 
     class PersediaanViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvNama: TextView = itemView.findViewById(R.id.tv_nama_barang)
@@ -24,14 +31,15 @@ class PersediaanAdapter(private val context: Context, private val listBarang: Mu
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersediaanViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_persediaan, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_persediaan, parent, false)
         return PersediaanViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: PersediaanViewHolder, position: Int) {
         val item = listBarang[position]
 
-        holder.tvNama.text = item.nama
+        holder.tvNama.text = item.namaBarang
         holder.tvJumlah.text = item.stok.toString()
         holder.tvSatuan.text = item.satuan
 
@@ -40,27 +48,43 @@ class PersediaanAdapter(private val context: Context, private val listBarang: Mu
             item.stok <= 10 -> R.color.warning_orange
             else -> R.color.primary_blue
         }
-        holder.cardRoot.setCardBackgroundColor(ContextCompat.getColor(context, colorResId))
+        holder.cardRoot.setCardBackgroundColor(
+            ContextCompat.getColor(context, colorResId)
+        )
 
-        holder.itemView.setOnClickListener {
+        holder.cardRoot.setOnClickListener {
             val intent = Intent(context, DeskripsiItemActivity::class.java)
+            intent.putExtra("ID_PERSEDIAAN", item.idPersediaan)
             context.startActivity(intent)
         }
 
         holder.btnPlus.setOnClickListener {
-            val updatedItem = item.copy(stok = item.stok + 1)
-            listBarang[position] = updatedItem
-            notifyItemChanged(position)
+            CoroutineScope(Dispatchers.IO).launch {
+                db.persediaanDao().updateStok(
+                    item.idPersediaan,
+                    item.stok + 1
+                )
+            }
         }
 
         holder.btnMinus.setOnClickListener {
             if (item.stok > 0) {
-                val updatedItem = item.copy(stok = item.stok - 1)
-                listBarang[position] = updatedItem
-                notifyItemChanged(position)
+                CoroutineScope(Dispatchers.IO).launch {
+                    db.persediaanDao().updateStok(
+                        item.idPersediaan,
+                        item.stok - 1
+                    )
+                }
             }
         }
     }
 
     override fun getItemCount() = listBarang.size
+
+    // 🔥 INI KUNCI UTAMANYA
+    fun updateData(newData: List<PersediaanDetail>) {
+        listBarang.clear()
+        listBarang.addAll(newData)
+        notifyDataSetChanged()
+    }
 }

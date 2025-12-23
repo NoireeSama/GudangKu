@@ -50,10 +50,13 @@
                 android:id="@+id/tv_desc_log"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Beras Bulog +10 karung"
+                android:text="Beras Bulog +10 karung\nGudang: Gudang Utama • Oleh: Mirza"
                 android:textColor="@color/text_grey"
                 android:textSize="14sp"
-                android:layout_marginTop="2dp"/>
+                android:layout_marginTop="2dp"
+                android:lineSpacingExtra="4dp"
+                android:maxLines="4"/>
+
         </LinearLayout>
 
         <TextView
