@@ -13,5 +13,6 @@ data class TableRiwayat(
     val jumlah: Int,
     val tanggal: Long = System.currentTimeMillis(),
     val namaGudang: String,
-    val namaUser: String
+    val namaUser: String,
+    val catatan: String
 )

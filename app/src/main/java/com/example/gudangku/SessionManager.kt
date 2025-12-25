@@ -64,17 +64,8 @@ class SessionManager(context: Context) {
             .apply()
     }
 
-    fun hasActiveGudang(): Boolean =
-        prefs.contains(KEY_GUDANG_ID)
-
     fun getGudangNama(): String? =
         prefs.getString(KEY_GUDANG_NAMA, null)
-
-    fun getGudangKode(): String? =
-        prefs.getString(KEY_GUDANG_KODE, null)
-
-    fun getGudangId(): Int =
-        prefs.getInt(KEY_GUDANG_ID, -1)
 
     fun getGudangAktifId(): Int {
         return prefs.getInt(KEY_GUDANG_ID, -1)

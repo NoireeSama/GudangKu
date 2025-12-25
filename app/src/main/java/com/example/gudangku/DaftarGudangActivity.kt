@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 
 class DaftarGudangActivity : AppCompatActivity() {
 
-    private lateinit var adapter: GudangAdapter
     private lateinit var db: GudangKuDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {

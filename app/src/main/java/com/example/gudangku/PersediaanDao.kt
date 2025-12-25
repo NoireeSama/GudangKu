@@ -74,21 +74,47 @@ interface PersediaanDao {
     suspend fun getHomeSummary(idGudang: Int): HomeSummary
 
     @Query("""
-SELECT 
-    p.id AS idPersediaan,
-    b.id AS idBarang,
-    b.kodeBarang AS kodeBarang,
-    b.namaBarang AS namaBarang,
-    b.jenisBarang AS jenisBarang,
-    b.beratBarang AS beratBarang,
-    p.stok AS stok,
-    b.satuanBarang AS satuan,
-    b.deskripsiBarang AS deskripsiBarang
-FROM persediaan p
-JOIN barang b ON p.idBarang = b.id
-WHERE p.id = :idPersediaan
-LIMIT 1
-""")
+        SELECT 
+            p.id AS idPersediaan,
+            b.id AS idBarang,
+            g.idGudang AS idGudang,
+            g.namaGudang AS namaGudang,
+            b.kodeBarang AS kodeBarang,
+            b.namaBarang AS namaBarang,
+            b.jenisBarang AS jenisBarang,
+            b.beratBarang AS beratBarang,
+            p.stok AS stok,
+            b.satuanBarang AS satuan,
+            b.deskripsiBarang AS deskripsiBarang
+        FROM persediaan p
+        JOIN barang b ON p.idBarang = b.id
+        JOIN gudang g ON p.idGudang = g.idGudang
+        WHERE p.id = :idPersediaan
+        LIMIT 1
+    """)
     suspend fun getDetailByPersediaan(idPersediaan: Int): PersediaanDetail
+
+    @Query("""
+    SELECT 
+        tp.id AS idPersediaan, 
+        tp.idBarang, 
+        tp.idGudang, 
+        tp.stok, 
+        tb.kodeBarang, 
+        tb.namaBarang, 
+        tb.jenisBarang, 
+        tb.beratBarang, 
+        tb.deskripsiBarang, 
+        tb.satuanBarang AS satuan
+    FROM persediaan tp
+    INNER JOIN barang tb ON tp.idBarang = tb.id 
+    WHERE tp.idBarang = :idBarang 
+    LIMIT 1
+""")
+    suspend fun getDetailByBarang(idBarang: Int): PersediaanDetail
+
+
+    @Query("DELETE FROM persediaan WHERE idBarang = :idBarang AND idGudang = :idGudang")
+    suspend fun deleteByBarangDanGudang(idBarang: Int, idGudang: Int)
 
 }

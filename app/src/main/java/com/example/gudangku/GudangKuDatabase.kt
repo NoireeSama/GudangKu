@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.gudangku.*
+
 
 @Database(
     entities = [
@@ -12,9 +14,8 @@ import androidx.room.RoomDatabase
         TableBarang::class,
         TablePersediaan::class,
         TableRiwayat::class
-
     ],
-    version = 6
+    version = 7
 )
 abstract class GudangKuDatabase : RoomDatabase() {
 
@@ -36,7 +37,8 @@ abstract class GudangKuDatabase : RoomDatabase() {
                     "gudangku_db"
                 )
                     .fallbackToDestructiveMigration()
-                    .build().also { INSTANCE = it }
+                    .build()
+                    .also { INSTANCE = it }
             }
         }
     }

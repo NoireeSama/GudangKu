@@ -1,6 +1,7 @@
 package com.example.gudangku
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BarangDao {
@@ -15,7 +16,7 @@ interface BarangDao {
     suspend fun delete(barang: TableBarang)
 
     @Query("SELECT * FROM barang")
-    suspend fun getAll(): List<TableBarang>
+    fun getAll(): Flow<List<TableBarang>>
 
     @Query("""
     UPDATE barang SET
@@ -31,6 +32,10 @@ interface BarangDao {
         berat: Float
     )
 
-    @Query("SELECT * FROM barang WHERE id = :id LIMIT 1")
+    @Query("DELETE FROM barang WHERE id = :id")
+    suspend fun deleteById(id: Int)
+
+    @Query("SELECT * FROM barang WHERE id = :id")
     suspend fun getBarangById(id: Int): TableBarang
+
 }

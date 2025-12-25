@@ -43,6 +43,7 @@ class BarangAdapter(private val context: Context, private val listBarang: List<B
 
         holder.cardRoot.setOnClickListener {
             val intent = Intent(context, DeskripsiItemActivity::class.java)
+            intent.putExtra("ID_BARANG", item.idBarang)
             context.startActivity(intent)
         }
     }

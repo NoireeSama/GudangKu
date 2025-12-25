@@ -34,25 +34,33 @@ class LogAdapter(private val listLog: List<RiwayatBarang>) :
         holder.tvJudul.text = when (item.jenis) {
             "MASUK" -> "Barang Masuk"
             "KELUAR" -> "Barang Keluar"
-            "EDIT" -> "Edit Stok"
+            "EDIT" -> "Edit Barang"
+            "HAPUS" -> "Hapus Barang"
+
             else -> "Aktivitas"
         }
 
         holder.tvDesc.text = when (item.jenis) {
             "MASUK" ->
-                "+${item.jumlah} ${item.namaBarang}\n" +
-                        "Gudang: ${item.namaGudang}\n" +
-                        "Oleh: ${item.namaUser}"
+                "+${item.jumlah} ${item.namaBarang}" +
+                        "\nGudang: ${item.namaGudang}" +
+                        "\nOleh: ${item.namaUser}"
 
             "KELUAR" ->
                 "+${item.jumlah} ${item.namaBarang}\n" +
-                        "Gudang: ${item.namaGudang}\n" +
-                        "Oleh: ${item.namaUser}"
+                        "\nGudang: ${item.namaGudang}" +
+                        "\nOleh: ${item.namaUser}"
 
             "EDIT" ->
-                "+${item.jumlah} ${item.namaBarang}\n" +
+                "Nama Barang: ${item.namaBarang}" +
+                        "\nCatatan: ${item.catatan}" +
+                        "\nGudang: ${item.namaGudang}" +
+                        "\nOleh: ${item.namaUser}"
+
+            "HAPUS" ->
+                "Barang dihapus\n" +
                         "Gudang: ${item.namaGudang}\n" +
-                        "Oleh: ${item.namaUser}\n"
+                        "Oleh: ${item.namaUser}"
 
             else ->
                 item.namaBarang
@@ -64,22 +72,26 @@ class LogAdapter(private val listLog: List<RiwayatBarang>) :
         holder.tvWaktu.text = formatWaktu(item.tanggal)
 
         when (item.jenis) {
-            "MASUK" -> setIcon(holder, "#E8F5E9", "#2E7D32")
-            "KELUAR" -> setIcon(holder, "#FFEBEE", "#C62828")
-            "EDIT" -> setIcon(holder, "#E3F2FD", "#1565C0")
+            "MASUK" -> setIcon(holder, "#E8F5E9", "#2E7D32", R.drawable.ic_add)
+            "KELUAR" -> setIcon(holder, "#FFEBEE", "#C62828", R.drawable.ic_delete)
+            "EDIT" -> setIcon(holder, "#E3F2FD", "#1565C0", R.drawable.ic_ganti)
+            "HAPUS" -> setIcon(holder, "#FDECEA", "#B71C1C", R.drawable.ic_delete)
+
         }
+
+
     }
 
     override fun getItemCount() = listLog.size
 
-    private fun setIcon(holder: LogViewHolder, bg: String, icon: String) {
+    private fun setIcon(holder: LogViewHolder, bg: String, iconColor: String, iconRes: Int) {
         holder.cardIcon.setCardBackgroundColor(bg.toColorInt())
-        holder.imgIcon.setColorFilter(icon.toColorInt())
-        holder.imgIcon.setImageResource(R.drawable.ic_add)
+        holder.imgIcon.setColorFilter(iconColor.toColorInt())
+        holder.imgIcon.setImageResource(iconRes)
     }
 
     private fun formatWaktu(time: Long): String {
-        val sdf = java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault())
-        return sdf.format(java.util.Date(time))
+        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+        return sdf.format(Date(time))
     }
 }

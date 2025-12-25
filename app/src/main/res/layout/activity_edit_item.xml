@@ -75,6 +75,24 @@
                     android:background="@drawable/bg_input_field"
                     android:layout_marginBottom="12dp"/>
 
+                <TextView
+                    android:text="Jenis Barang"
+                    android:textColor="@color/primary_blue"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+
+                <EditText
+                    android:id="@+id/et_jenis_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="jenis barang"
+                    android:padding="12dp"
+                    android:background="@drawable/bg_input_field"
+                    android:layout_marginBottom="12dp"/>
+
+
                 <TextView android:text="Berat Item" android:textColor="@color/primary_blue" android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="4dp"/>
                 <EditText
                     android:id="@+id/et_berat_item"
@@ -85,6 +103,24 @@
                     android:padding="12dp"
                     android:background="@drawable/bg_input_field"
                     android:layout_marginBottom="12dp"/>
+                <TextView
+                    android:text="Deskripsi Barang"
+                    android:textColor="@color/primary_blue"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+
+                <EditText
+                    android:id="@+id/et_deskripsi_barang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minLines="3"
+                    android:hint="Deskripsi barang..."
+                    android:padding="12dp"
+                    android:background="@drawable/bg_input_field"
+                    android:layout_marginBottom="12dp"/>
+
 
                 <LinearLayout
                     android:id="@+id/layout_dynamic_inputs"
@@ -97,7 +133,7 @@
                     android:id="@+id/btn_add_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="+ Tambah Deskripsi"
+                    android:text="+ Tambah Catatan"
                     android:gravity="center"
                     android:padding="12dp"
                     android:textStyle="bold"

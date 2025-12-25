@@ -144,24 +144,4 @@ class HomeFragment : Fragment() {
         }
 
     }
-
-    private fun showEmptyState(
-        tvNamaGudang: TextView,
-        tvAlamatGudang: TextView,
-        tvBarangMasuk: TextView,
-        tvBarangKeluar: TextView,
-        tvTotalBarang: TextView,
-        tvTotalBerat: TextView,
-        rvBarang: RecyclerView
-    ) {
-        tvNamaGudang.text = "Belum ada gudang"
-        tvAlamatGudang.text = "Silakan pilih gudang"
-
-        tvBarangMasuk.text = "0"
-        tvBarangKeluar.text = "0"
-        tvTotalBarang.text = "0"
-        tvTotalBerat.text = "0 Kg"
-
-        rvBarang.adapter = PersediaanAdapter(requireContext(), mutableListOf())
-    }
 }

@@ -154,7 +154,9 @@ class TambahItemFragment : Fragment() {
                         jenis = "MASUK",
                         jumlah = jumlah,
                         namaGudang = namaGudang,
-                        namaUser = namaUser
+                        namaUser = namaUser,
+                        catatan = "Menambahkan barang ke gudang",
+                        tanggal = System.currentTimeMillis()
                     )
                 )
 
