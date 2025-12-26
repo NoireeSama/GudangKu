@@ -20,9 +20,6 @@ class NotifikasiActivity : AppCompatActivity() {
         val rv = findViewById<RecyclerView>(R.id.rv_notifikasi)
         rv.layoutManager = LinearLayoutManager(this)
 
-        val session = SessionManager(this)
-        val gudangId = session.getGudangAktifId()
-
         val db = GudangKuDatabase.getInstance(this)
 
         lifecycleScope.launch {

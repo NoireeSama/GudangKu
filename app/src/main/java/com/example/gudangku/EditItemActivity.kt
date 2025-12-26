@@ -12,13 +12,10 @@ class EditItemActivity : AppCompatActivity() {
     private lateinit var etKodeItem: EditText
     private lateinit var etNamaItem: EditText
     private lateinit var etJenisItem: EditText
-
     private lateinit var etBeratItem: EditText
     private lateinit var etDeskripsiBarang: EditText
-
     private lateinit var layoutDynamicInputs: LinearLayout
     private lateinit var switchManual: Switch
-
     private var idBarang = -1
     private var idGudang = -1
     private lateinit var namaGudang: String
@@ -58,7 +55,6 @@ class EditItemActivity : AppCompatActivity() {
             etJenisItem.setText(barang?.jenisBarang)
             etBeratItem.setText(barang?.beratBarang.toString())
             etDeskripsiBarang.setText(barang?.deskripsiBarang)
-
         }
 
         switchManual.setOnCheckedChangeListener { _, isChecked ->
@@ -71,7 +67,6 @@ class EditItemActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.btn_simpan).setOnClickListener {
-
             val kode = etKodeItem.text.toString().trim()
             val nama = etNamaItem.text.toString().trim()
             val jenis = etJenisItem.text.toString().trim()
@@ -85,7 +80,6 @@ class EditItemActivity : AppCompatActivity() {
                         ?.text?.toString()?.takeIf { it.isNotBlank() }
                 }
                 .joinToString("\n")
-
 
             lifecycleScope.launch {
                 val barangLama = db.barangDao().getBarangById(idBarang)
@@ -126,7 +120,6 @@ class EditItemActivity : AppCompatActivity() {
                 }
             }
         }
-
         findViewById<ImageView>(R.id.btn_back).setOnClickListener { finish() }
     }
 
@@ -137,5 +130,4 @@ class EditItemActivity : AppCompatActivity() {
         et.background = ContextCompat.getDrawable(this, R.drawable.bg_input_field)
         layoutDynamicInputs.addView(et)
     }
-
 }

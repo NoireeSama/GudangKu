@@ -13,12 +13,10 @@ class SessionManager(context: Context) {
         const val KEY_USER_ID = "user_id"
         const val KEY_USERNAME = "username"
         const val KEY_EMAIL = "email"
-
         const val KEY_GUDANG_ID = "gudang_id"
         const val KEY_GUDANG_NAMA = "gudang_nama"
         const val KEY_GUDANG_KODE = "gudang_kode"
     }
-
 
     fun createLoginSession(
         userId: Int,
@@ -35,9 +33,6 @@ class SessionManager(context: Context) {
 
     fun isLoggedIn(): Boolean =
         prefs.getBoolean(KEY_IS_LOGGED_IN, false)
-
-    fun getUserId(): Int =
-        prefs.getInt(KEY_USER_ID, -1)
 
     fun getUsername(): String? =
         prefs.getString(KEY_USERNAME, null)

@@ -47,6 +47,5 @@ class BarangAdapter(private val context: Context, private val listBarang: List<B
             context.startActivity(intent)
         }
     }
-
     override fun getItemCount(): Int = listBarang.size
 }

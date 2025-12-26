@@ -31,7 +31,6 @@ class DeskripsiItemActivity : AppCompatActivity() {
         val btnEdit = findViewById<Button>(R.id.btn_edit_persediaan)
         val btnHapus = findViewById<Button>(R.id.btn_hapus)
 
-
         tvNama = findViewById(R.id.tv_nama_barang)
         tvDetail = findViewById(R.id.tv_detail_barang)
         tvStok = findViewById(R.id.tv_stok)
@@ -39,11 +38,9 @@ class DeskripsiItemActivity : AppCompatActivity() {
 
         btnBack.setOnClickListener { finish() }
 
-        // 1. Ambil data dari intent
         idPersediaan = intent.getIntExtra("ID_PERSEDIAAN", -1)
         idBarang = intent.getIntExtra("ID_BARANG", -1)
 
-// 2. Validasi: Minimal harus ada salah satu ID
         if (idPersediaan == -1 && idBarang == -1) {
             Toast.makeText(this, "Data tidak valid", Toast.LENGTH_SHORT).show()
             finish()
@@ -54,14 +51,12 @@ class DeskripsiItemActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
-                // 3. Ambil data dari database
                 val detail = if (idPersediaan != -1) {
                     db.persediaanDao().getDetailByPersediaan(idPersediaan)
                 } else {
                     db.persediaanDao().getDetailByBarang(idBarang)
                 }
 
-                // 4. Update nilai ID lokal agar fungsi hapus/edit tidak error
                 idBarang = detail.idBarang
                 idPersediaan = detail.idPersediaan
 
@@ -90,7 +85,6 @@ class DeskripsiItemActivity : AppCompatActivity() {
                 .setNegativeButton("Batal", null)
                 .show()
         }
-
     }
 
     private fun tampilkanDetail(detail: PersediaanDetail) {
@@ -126,7 +120,6 @@ class DeskripsiItemActivity : AppCompatActivity() {
                 val barang = db.barangDao().getBarangById(idBarang)
                 val namaBarang = barang?.namaBarang ?: "(Barang tidak ditemukan)"
 
-                // 1️⃣ SIMPAN LOG DULU
                 db.riwayatDao().insert(
                     TableRiwayat(
                         idBarang = idBarang,
@@ -141,7 +134,6 @@ class DeskripsiItemActivity : AppCompatActivity() {
                     )
                 )
 
-                // 2️⃣ BARU HAPUS DATA
                 db.persediaanDao().deleteByBarangDanGudang(idBarang, idGudang)
                 db.barangDao().deleteById(idBarang)
 
@@ -162,8 +154,4 @@ class DeskripsiItemActivity : AppCompatActivity() {
             }
         }
     }
-
-
-
 }
-

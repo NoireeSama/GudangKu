@@ -27,7 +27,6 @@ interface RiwayatDao {
 """)
     fun getByGudang(idGudang: Int): Flow<List<RiwayatBarang>>
 
-
     @Query("""
     SELECT 
         id,
@@ -42,7 +41,6 @@ interface RiwayatDao {
     ORDER BY tanggal DESC
 """)
     fun getAllRiwayat(): Flow<List<RiwayatBarang>>
-
 
     @Query("SELECT * FROM riwayat ORDER BY tanggal DESC")
     suspend fun getAll(): List<TableRiwayat>

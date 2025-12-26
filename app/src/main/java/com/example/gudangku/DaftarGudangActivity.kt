@@ -17,13 +17,11 @@ class DaftarGudangActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_daftar_gudang)
-        val session = SessionManager(this)
 
         db = GudangKuDatabase.getInstance(this)
 
         val rv = findViewById<RecyclerView>(R.id.rv_daftar_gudang)
 
-        // 🔹 Adapter SATU KALI
         val adapter = GudangAdapter(this)
 
         rv.layoutManager = LinearLayoutManager(this)
@@ -37,7 +35,6 @@ class DaftarGudangActivity : AppCompatActivity() {
             startActivity(Intent(this, TambahGudangActivity::class.java))
         }
 
-        // 🔹 AMBIL DATA DARI ROOM
         lifecycleScope.launch {
             db.gudangDao().getAllGudang().collect { list ->
                 adapter.updateData(list)

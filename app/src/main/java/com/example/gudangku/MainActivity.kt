@@ -14,8 +14,6 @@ class MainActivity : AppCompatActivity() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNav.labelVisibilityMode = BottomNavigationView.LABEL_VISIBILITY_UNLABELED
 
-
-
         loadFragment(HomeFragment())
 
         bottomNav.setOnItemSelectedListener { item ->

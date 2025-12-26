@@ -17,7 +17,6 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.collect
 
 class HomeFragment : Fragment() {
-
     private lateinit var session: SessionManager
     private lateinit var db: GudangKuDatabase
 
@@ -41,7 +40,7 @@ class HomeFragment : Fragment() {
             return
         }
 
-        // ================= VIEW =================
+        // VIEW
         val tvUsername = view.findViewById<TextView>(R.id.tv_username)
         val tvNamaGudang = view.findViewById<TextView>(R.id.tv_nama_gudang)
         val tvAlamatGudang = view.findViewById<TextView>(R.id.tv_alamat_gudang)
@@ -56,7 +55,7 @@ class HomeFragment : Fragment() {
 
         tvUsername.text = session.getDisplayName()
 
-        // ================= LOAD DATA =================
+        // LOAD DATA
         loadHomeData(
             tvNamaGudang,
             tvAlamatGudang,
@@ -67,7 +66,7 @@ class HomeFragment : Fragment() {
             rvBarang
         )
 
-        // ================= NAV =================
+        // NAV
         view.findViewById<View>(R.id.btnHalamanUser).setOnClickListener {
             startActivity(Intent(requireContext(), ProfileActivity::class.java)
             )
@@ -119,11 +118,9 @@ class HomeFragment : Fragment() {
                 return@launch
             }
 
-            // 🔥 COLLECT FLOW
             db.persediaanDao()
                 .getPersediaanByGudang(idGudang)
                 .collect { listBarang ->
-
                     withContext(Dispatchers.Main) {
                         tvNamaGudang.text = gudang.namaGudang
                         tvAlamatGudang.text =
@@ -137,11 +134,10 @@ class HomeFragment : Fragment() {
 
                         rvBarang.adapter = PersediaanAdapter(
                             requireContext(),
-                            listBarang.toMutableList() // ✅ AMAN
+                            listBarang.toMutableList()
                         )
                     }
                 }
         }
-
     }
 }

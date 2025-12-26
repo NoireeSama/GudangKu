@@ -9,7 +9,7 @@ data class TableRiwayat(
     val id: Int = 0,
     val idBarang: Int,
     val idGudang: Int,
-    val jenis: String, // MASUK / KELUAR / EDIT
+    val jenis: String, // MASUK / KELUAR / EDIT / HAPUS
     val jumlah: Int,
     val tanggal: Long = System.currentTimeMillis(),
     val namaGudang: String,

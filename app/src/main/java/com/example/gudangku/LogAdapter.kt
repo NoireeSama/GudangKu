@@ -41,33 +41,26 @@ class LogAdapter(private val listLog: List<RiwayatBarang>) :
         }
 
         holder.tvDesc.text = when (item.jenis) {
-            "MASUK" ->
-                "+${item.jumlah} ${item.namaBarang}" +
-                        "\nGudang: ${item.namaGudang}" +
-                        "\nOleh: ${item.namaUser}"
+            "MASUK" -> "Gudang: ${item.namaGudang}" +
+                        "\nOleh: ${item.namaUser}" +
+                        "\n+${item.jumlah} ${item.namaBarang}"
 
-            "KELUAR" ->
-                "+${item.jumlah} ${item.namaBarang}\n" +
-                        "\nGudang: ${item.namaGudang}" +
-                        "\nOleh: ${item.namaUser}"
+            "KELUAR" -> "Gudang: ${item.namaGudang}" +
+                        "\nOleh: ${item.namaUser}" +
+                        "\n+${item.jumlah} ${item.namaBarang}"
 
-            "EDIT" ->
-                "Nama Barang: ${item.namaBarang}" +
-                        "\nCatatan: ${item.catatan}" +
-                        "\nGudang: ${item.namaGudang}" +
-                        "\nOleh: ${item.namaUser}"
+            "EDIT" -> "Gudang: ${item.namaGudang}" +
+                        "\nOleh: ${item.namaUser}" +
+                        "\nNama Barang: ${item.namaBarang}" +
+                        "\nCatatan: ${item.catatan}"
 
-            "HAPUS" ->
-                "${item.namaBarang} dihapus\n" +
-                        "Gudang: ${item.namaGudang}\n" +
-                        "Oleh: ${item.namaUser}"
+            "HAPUS" -> "Gudang: ${item.namaGudang}" +
+                        "\nOleh: ${item.namaUser}" +
+                        "\n${item.namaBarang} dihapus"
 
             else ->
                 item.namaBarang
         }
-
-
-
 
         holder.tvWaktu.text = formatWaktu(item.tanggal)
 
@@ -76,10 +69,7 @@ class LogAdapter(private val listLog: List<RiwayatBarang>) :
             "KELUAR" -> setIcon(holder, "#FFEBEE", "#C62828", R.drawable.ic_delete)
             "EDIT" -> setIcon(holder, "#E3F2FD", "#1565C0", R.drawable.ic_ganti)
             "HAPUS" -> setIcon(holder, "#FDECEA", "#B71C1C", R.drawable.ic_delete)
-
         }
-
-
     }
 
     override fun getItemCount() = listLog.size

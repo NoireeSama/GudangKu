@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.gudangku.*
 
-
 @Database(
     entities = [
         TableUser::class,
@@ -15,7 +14,7 @@ import com.example.gudangku.*
         TablePersediaan::class,
         TableRiwayat::class
     ],
-    version = 8
+    version = 9
 )
 abstract class GudangKuDatabase : RoomDatabase() {
 

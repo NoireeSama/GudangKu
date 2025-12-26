@@ -18,7 +18,7 @@ class ProfileActivity : AppCompatActivity() {
         session = SessionManager(this)
 
         val tvUserName = findViewById<TextView>(R.id.tvUserName)
-        tvUserName.text = session.getUsername() // Mengambil nama dari session
+        tvUserName.text = session.getUsername()
 
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
         btnBack.setOnClickListener {

@@ -11,5 +11,3 @@ data class PersediaanDetail(
     val satuan: String,
     val deskripsiBarang: String
 )
-
-
