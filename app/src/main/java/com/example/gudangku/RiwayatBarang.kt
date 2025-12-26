@@ -8,5 +8,5 @@ data class RiwayatBarang(
     val namaBarang: String,
     val namaGudang: String,
     val namaUser: String,
-    val catatan: String?
+    val catatan: String
 )

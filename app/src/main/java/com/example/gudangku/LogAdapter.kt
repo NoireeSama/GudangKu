@@ -58,7 +58,7 @@ class LogAdapter(private val listLog: List<RiwayatBarang>) :
                         "\nOleh: ${item.namaUser}"
 
             "HAPUS" ->
-                "Barang dihapus\n" +
+                "${item.namaBarang} dihapus\n" +
                         "Gudang: ${item.namaGudang}\n" +
                         "Oleh: ${item.namaUser}"
 

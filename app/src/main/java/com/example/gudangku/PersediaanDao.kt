@@ -96,19 +96,19 @@ interface PersediaanDao {
 
     @Query("""
     SELECT 
-        tp.id AS idPersediaan, 
-        tp.idBarang, 
-        tp.idGudang, 
-        tp.stok, 
-        tb.kodeBarang, 
-        tb.namaBarang, 
-        tb.jenisBarang, 
-        tb.beratBarang, 
-        tb.deskripsiBarang, 
-        tb.satuanBarang AS satuan
-    FROM persediaan tp
-    INNER JOIN barang tb ON tp.idBarang = tb.id 
-    WHERE tp.idBarang = :idBarang 
+        p.id AS idPersediaan, 
+        p.idBarang, 
+        p.idGudang, 
+        p.stok, 
+        b.kodeBarang, 
+        b.namaBarang, 
+        b.jenisBarang, 
+        b.beratBarang, 
+        b.deskripsiBarang, 
+        b.satuanBarang AS satuan
+    FROM persediaan p
+    INNER JOIN barang b ON p.idBarang = b.id 
+    WHERE p.idBarang = :idBarang 
     LIMIT 1
 """)
     suspend fun getDetailByBarang(idBarang: Int): PersediaanDetail

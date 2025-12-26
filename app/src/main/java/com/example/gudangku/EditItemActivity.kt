@@ -109,7 +109,8 @@ class EditItemActivity : AppCompatActivity() {
                             namaGudang = namaGudang,
                             namaUser = namaUser,
                             catatan = catatan.ifBlank { "Edit data barang" },
-                            tanggal = System.currentTimeMillis()
+                            tanggal = System.currentTimeMillis(),
+                            namaBarang = barangBaru.namaBarang
                         )
                     )
 

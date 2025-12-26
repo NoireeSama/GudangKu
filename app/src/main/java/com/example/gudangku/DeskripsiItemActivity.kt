@@ -136,7 +136,8 @@ class DeskripsiItemActivity : AppCompatActivity() {
                         namaGudang = namaGudang,
                         namaUser = namaUser,
                         catatan = "Menghapus barang $namaBarang",
-                        tanggal = System.currentTimeMillis()
+                        tanggal = System.currentTimeMillis(),
+                        namaBarang = namaBarang
                     )
                 )
 
