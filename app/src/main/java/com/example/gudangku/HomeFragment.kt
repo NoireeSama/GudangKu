@@ -130,8 +130,14 @@ class HomeFragment : Fragment() {
                         tvBarangMasuk.text = summary.barangMasuk.toString()
                         tvBarangKeluar.text = summary.barangKeluar.toString()
                         tvTotalBarang.text = summary.totalBarang.toString()
-                        tvTotalBerat.text =
-                            String.format("%.1f Gram", summary.totalBerat ?: 0.0)
+                        val beratGram = summary.totalBerat ?: 0.0
+
+                        tvTotalBerat.text = if (beratGram < 1000) {
+                            String.format("%.0f Gram", beratGram)
+                        } else {
+                            String.format("%.2f Kg", beratGram / 1000)
+                        }
+
 
                         rvBarang.adapter = PersediaanAdapter(
                             requireContext(),
