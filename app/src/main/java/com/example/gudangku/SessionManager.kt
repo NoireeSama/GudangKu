@@ -16,6 +16,7 @@ class SessionManager(context: Context) {
         const val KEY_GUDANG_ID = "gudang_id"
         const val KEY_GUDANG_NAMA = "gudang_nama"
         const val KEY_GUDANG_KODE = "gudang_kode"
+        const val KEY_GUDANG_JUMLAH_RAK = "gudang_jumlah_rak"
     }
 
     fun createLoginSession(
@@ -50,12 +51,14 @@ class SessionManager(context: Context) {
     fun setActiveGudang(
         gudangId: Int,
         namaGudang: String,
-        kodeGudang: String
+        kodeGudang: String,
+        jumlahRak: Int
     ) {
         prefs.edit()
             .putInt(KEY_GUDANG_ID, gudangId)
             .putString(KEY_GUDANG_NAMA, namaGudang)
             .putString(KEY_GUDANG_KODE, kodeGudang)
+            .putInt(KEY_GUDANG_JUMLAH_RAK, jumlahRak)
             .apply()
     }
 

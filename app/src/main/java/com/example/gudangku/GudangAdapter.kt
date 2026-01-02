@@ -31,14 +31,15 @@ class GudangAdapter(
 
         holder.tvNama.text = item.namaGudang
         holder.tvAlamat.text =
-            "${item.lokasiGudang}\n${item.kodeGudang}"
+            "${item.lokasiGudang}\n${item.kodeGudang}\nRak : ${item.jumlahRak}"
 
         holder.itemView.setOnClickListener {
             val session = SessionManager(context)
             session.setActiveGudang(
                 item.idGudang,
                 item.namaGudang,
-                item.kodeGudang
+                item.kodeGudang,
+                item.jumlahRak
             )
 
             Toast.makeText(
