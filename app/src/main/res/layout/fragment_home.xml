@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="22dp"
     android:background="@color/bg_grey">
 
     <androidx.core.widget.NestedScrollView
@@ -36,6 +37,7 @@
                     android:id="@+id/img_profile"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_launcher_background"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -59,6 +61,7 @@
                     android:layout_marginEnd="8dp"
                     android:background="@drawable/bg_circle_white"
                     android:padding="8dp"
+                    android:layout_marginVertical="4dp"
                     android:src="@drawable/ic_search"
                     app:layout_constraintEnd_toStartOf="@id/btn_notif"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -69,6 +72,8 @@
                     android:layout_height="40dp"
                     android:background="@drawable/bg_circle_white"
                     android:padding="8dp"
+                    android:layout_marginVertical="4dp"
+                    android:layout_marginRight="4dp"
                     android:src="@drawable/ic_bell"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -128,6 +133,7 @@
                     app:cardCornerRadius="16dp">
 
                     <LinearLayout
+                        android:id="@+id/cv_total_stok"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="16dp"
@@ -136,7 +142,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Barang Masuk"
+                            android:text="Total Stok"
                             android:textColor="@color/white"/>
 
                         <TextView
@@ -198,6 +204,7 @@
                     app:cardCornerRadius="16dp">
 
                     <LinearLayout
+                        android:id="@+id/cv_total_barang"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"

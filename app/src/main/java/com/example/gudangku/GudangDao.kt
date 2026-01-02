@@ -23,4 +23,13 @@ interface GudangDao {
 
     @Query("SELECT * FROM gudang ORDER BY idGudang DESC")
     fun getAllGudang(): Flow<List<TableGudang>>
+
+    @Query("SELECT COUNT(*) FROM gudang")
+    suspend fun getJumlahGudang(): Int
+
+    @Query("SELECT SUM(jumlahRak) FROM gudang")
+    suspend fun getJumlahRak(): Int
+
+    @Query("SELECT * FROM gudang WHERE idGudang = :id LIMIT 1")
+    suspend fun getDeskripsiById(id: Int): TableGudang?
 }

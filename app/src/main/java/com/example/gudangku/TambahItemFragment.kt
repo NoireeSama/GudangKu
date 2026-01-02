@@ -53,14 +53,14 @@ class TambahItemFragment : Fragment() {
         }
 
         view.findViewById<ImageView>(R.id.btn_qty_up).setOnClickListener {
-            if (!switchJumlah.isChecked) {
+            if (switchJumlah.isChecked) {
                 val current = etJumlah.text.toString().toIntOrNull() ?: 0
                 etJumlah.setText((current + 1).toString())
             }
         }
 
         view.findViewById<ImageView>(R.id.btn_qty_down).setOnClickListener {
-            if (!switchJumlah.isChecked) {
+            if (switchJumlah.isChecked) {
                 val current = etJumlah.text.toString().toIntOrNull() ?: 0
                 if (current > 0) etJumlah.setText((current - 1).toString())
             }

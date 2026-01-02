@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -130,7 +131,7 @@ class HomeFragment : Fragment() {
                         tvBarangKeluar.text = summary.barangKeluar.toString()
                         tvTotalBarang.text = summary.totalBarang.toString()
                         tvTotalBerat.text =
-                            String.format("%.2f Gram", summary.totalBerat ?: 0.0)
+                            String.format("%.1f Gram", summary.totalBerat ?: 0.0)
 
                         rvBarang.adapter = PersediaanAdapter(
                             requireContext(),

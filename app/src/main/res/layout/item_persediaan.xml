@@ -77,9 +77,9 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginEnd="16dp"
-            android:src="@drawable/ic_launcher_foreground"
+            android:src="@drawable/ic_kurang"
             app:tint="@color/white"
-            android:rotation="90"
+            android:rotation="180"
             app:layout_constraintEnd_toStartOf="@id/btn_plus"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
