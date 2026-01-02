@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -53,6 +54,7 @@ class HomeFragment : Fragment() {
 
         val rvBarang = view.findViewById<RecyclerView>(R.id.rv_barang)
         rvBarang.layoutManager = LinearLayoutManager(requireContext())
+        val tvInfo = view.findViewById<TextView>(R.id.tv_stock_info)
 
         tvUsername.text = session.getDisplayName()
 
@@ -64,7 +66,8 @@ class HomeFragment : Fragment() {
             tvBarangKeluar,
             tvTotalBarang,
             tvTotalBerat,
-            rvBarang
+            rvBarang,
+            tvInfo
         )
 
         // NAV
@@ -79,6 +82,10 @@ class HomeFragment : Fragment() {
         view.findViewById<ImageView>(R.id.btn_ganti_gudang).setOnClickListener {
             startActivity(Intent(requireContext(), DaftarGudangActivity::class.java))
         }
+        view.findViewById<ImageView>(R.id.btn_search).setOnClickListener {
+            val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)
+            bottomNav.selectedItemId = R.id.nav_persediaan
+        }
     }
 
     override fun onResume() {
@@ -91,7 +98,8 @@ class HomeFragment : Fragment() {
                 it.findViewById(R.id.tv_barang_keluar),
                 it.findViewById(R.id.tv_total_barang),
                 it.findViewById(R.id.tv_total_berat),
-                it.findViewById(R.id.rv_barang)
+                it.findViewById(R.id.rv_barang),
+                it.findViewById(R.id.tv_stock_info)
             )
         }
     }
@@ -103,7 +111,8 @@ class HomeFragment : Fragment() {
         tvBarangKeluar: TextView,
         tvTotalBarang: TextView,
         tvTotalBerat: TextView,
-        rvBarang: RecyclerView
+        rvBarang: RecyclerView,
+        tvInfo: TextView
     ) {
         lifecycleScope.launch {
             val idGudang = session.getGudangAktifId()
@@ -122,29 +131,42 @@ class HomeFragment : Fragment() {
             db.persediaanDao()
                 .getPersediaanByGudang(idGudang)
                 .collect { listBarang ->
+
+                    val stokKritis = listBarang
+                        .filter { it.stok <= 10}
+
                     withContext(Dispatchers.Main) {
                         tvNamaGudang.text = gudang.namaGudang
-                        tvAlamatGudang.text =
-                            "${gudang.lokasiGudang}\n${gudang.kodeGudang}"
+                        tvAlamatGudang.text = "${gudang.lokasiGudang}\n${gudang.kodeGudang}"
 
                         tvBarangMasuk.text = summary.barangMasuk.toString()
                         tvBarangKeluar.text = summary.barangKeluar.toString()
                         tvTotalBarang.text = summary.totalBarang.toString()
-                        val beratGram = summary.totalBerat ?: 0.0
 
+                        val beratGram = summary.totalBerat ?: 0.0
                         tvTotalBerat.text = if (beratGram < 1000) {
                             String.format("%.0f Gram", beratGram)
                         } else {
                             String.format("%.2f Kg", beratGram / 1000)
                         }
 
-
-                        rvBarang.adapter = PersediaanAdapter(
-                            requireContext(),
-                            listBarang.toMutableList()
-                        )
+                        if (stokKritis.isEmpty()) {
+                            tvInfo.visibility = View.VISIBLE
+                            tvInfo.text = "Semua stok aman"
+                            rvBarang.adapter = PersediaanAdapter(
+                                requireContext(),
+                                mutableListOf()
+                            )
+                        } else {
+                            tvInfo.visibility = View.GONE
+                            rvBarang.adapter = PersediaanAdapter(
+                                requireContext(),
+                                stokKritis.toMutableList()
+                            )
+                        }
                     }
                 }
+
         }
     }
 }

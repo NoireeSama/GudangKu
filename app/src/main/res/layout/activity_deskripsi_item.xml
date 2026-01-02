@@ -104,18 +104,6 @@
                     android:textColor="@color/text_dark"
                     android:layout_marginBottom="24dp" />
 
-                <Button
-                    android:id="@+id/btn_hapus"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:text="Hapus Item"
-                    android:textAllCaps="false"
-                    android:textSize="16sp"
-                    android:backgroundTint="#D32F2F"
-                    app:cornerRadius="20dp"/>
-
                 <!-- EDIT -->
                 <Button
                     android:id="@+id/btn_edit_persediaan"
@@ -128,6 +116,18 @@
                     android:textSize="16sp"
                     android:backgroundTint="@color/primary_blue"
                     app:cornerRadius="20dp" />
+
+                <Button
+                    android:id="@+id/btn_hapus"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Hapus Item"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:backgroundTint="#D32F2F"
+                    app:cornerRadius="20dp"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
