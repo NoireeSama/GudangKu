@@ -145,10 +145,10 @@ class HomeFragment : Fragment() {
 
                         val beratGram = summary.totalBerat ?: 0.0
                         tvTotalBerat.text = if (beratGram < 1000) {
-                            String.format("%.0f Gram", beratGram)
-                        } else {
-                            String.format("%.2f Kg", beratGram / 1000)
-                        }
+                                                String.format("%.0f Gram", beratGram)
+                                            } else {
+                                                String.format("%.2f Kg", beratGram / 1000)
+                                            }
 
                         if (stokKritis.isEmpty()) {
                             tvInfo.visibility = View.VISIBLE
