@@ -81,7 +81,6 @@ class PersediaanAdapter(
 
     override fun getItemCount() = listBarang.size
 
-    // 🔥 INI KUNCI UTAMANYA
     fun updateData(newData: List<PersediaanDetail>) {
         listBarang.clear()
         listBarang.addAll(newData)

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="36dp"
     android:orientation="vertical"
     android:padding="24dp"
     android:background="@color/white">
@@ -40,6 +41,7 @@
             android:padding="24dp">
 
             <TextView
+                android:id="@+id/tv_nama_gudang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Gudang 1"
@@ -48,10 +50,9 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="16dp"/>
 
-            <TextView android:text="Kode: GX-0001" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="4dp"/>
-            <TextView android:text="Jenis: Gudang Sedang" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="4dp"/>
-            <TextView android:text="Jumlah Inventory: 144 Item" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="4dp"/>
-            <TextView android:text="Lokasi: jl.kemana aja no 32" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="16dp"/>
+            <TextView android:id="@+id/tv_kode_gudang" android:text="Kode: GX-0001" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="4dp"/>
+            <TextView android:id="@+id/tv_jumlah_rak" android:text="Jumlah Inventory: 144 Item" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="4dp"/>
+            <TextView android:id="@+id/tv_lokasi_gudang" android:text="Lokasi: jl.kemana aja no 32" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="16dp"/>
 
             <LinearLayout
                 android:id="@+id/container_additional_info"

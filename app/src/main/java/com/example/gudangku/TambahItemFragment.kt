@@ -41,36 +41,31 @@ class TambahItemFragment : Fragment() {
         etJenis = view.findViewById(R.id.et_jenis_item)
         switchJumlah = view.findViewById(R.id.switch_jumlah_manual)
 
-        // 🔁 Switch kode manual
         view.findViewById<SwitchCompat>(R.id.switch_kode_manual)
             .setOnCheckedChangeListener { _, isChecked ->
                 etKode.isEnabled = isChecked
                 etKode.alpha = if (isChecked) 1f else 0.5f
             }
 
-        // 🔁 Switch jumlah manual
         switchJumlah.setOnCheckedChangeListener { _, isChecked ->
             etJumlah.isEnabled = isChecked
             etJumlah.alpha = if (isChecked) 1f else 0.5f
         }
 
-        // ➕ qty
         view.findViewById<ImageView>(R.id.btn_qty_up).setOnClickListener {
-            if (!switchJumlah.isChecked) {
+            if (switchJumlah.isChecked) {
                 val current = etJumlah.text.toString().toIntOrNull() ?: 0
                 etJumlah.setText((current + 1).toString())
             }
         }
 
-        // ➖ qty
         view.findViewById<ImageView>(R.id.btn_qty_down).setOnClickListener {
-            if (!switchJumlah.isChecked) {
+            if (switchJumlah.isChecked) {
                 val current = etJumlah.text.toString().toIntOrNull() ?: 0
                 if (current > 0) etJumlah.setText((current - 1).toString())
             }
         }
 
-        // ➕ tambah deskripsi
         view.findViewById<TextView>(R.id.btn_add_description).setOnClickListener {
             val et = EditText(requireContext())
             et.hint = "Deskripsi Tambahan"
@@ -88,7 +83,6 @@ class TambahItemFragment : Fragment() {
             layoutDynamic.addView(et)
         }
 
-        // 💾 SIMPAN
         view.findViewById<Button>(R.id.btn_simpan_persediaan).setOnClickListener {
 
             val nama = etNama.text.toString().trim()
@@ -154,7 +148,10 @@ class TambahItemFragment : Fragment() {
                         jenis = "MASUK",
                         jumlah = jumlah,
                         namaGudang = namaGudang,
-                        namaUser = namaUser
+                        namaUser = namaUser,
+                        catatan = "Menambahkan barang ke gudang",
+                        tanggal = System.currentTimeMillis(),
+                        namaBarang = nama
                     )
                 )
 

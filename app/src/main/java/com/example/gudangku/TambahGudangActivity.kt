@@ -28,10 +28,8 @@ class TambahGudangActivity : AppCompatActivity() {
             val jumlahRak = etJumlahRak.text.toString()
 
             if (kodeGudang.isNotEmpty() && namaGudang.isNotEmpty() && lokasiGudang.isNotEmpty() && jumlahRak.isNotEmpty()) {
-                // Simpan data ke database atau lakukan tindakan lainnya
                 finish()
             } else {
-                // Tampilkan pesan kesalahan jika ada input yang kosong
                 Toast.makeText(this, "Mohon lengkapi semua data", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }

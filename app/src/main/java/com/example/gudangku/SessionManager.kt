@@ -13,12 +13,11 @@ class SessionManager(context: Context) {
         const val KEY_USER_ID = "user_id"
         const val KEY_USERNAME = "username"
         const val KEY_EMAIL = "email"
-
         const val KEY_GUDANG_ID = "gudang_id"
         const val KEY_GUDANG_NAMA = "gudang_nama"
         const val KEY_GUDANG_KODE = "gudang_kode"
+        const val KEY_GUDANG_JUMLAH_RAK = "gudang_jumlah_rak"
     }
-
 
     fun createLoginSession(
         userId: Int,
@@ -36,9 +35,6 @@ class SessionManager(context: Context) {
     fun isLoggedIn(): Boolean =
         prefs.getBoolean(KEY_IS_LOGGED_IN, false)
 
-    fun getUserId(): Int =
-        prefs.getInt(KEY_USER_ID, -1)
-
     fun getUsername(): String? =
         prefs.getString(KEY_USERNAME, null)
 
@@ -55,26 +51,19 @@ class SessionManager(context: Context) {
     fun setActiveGudang(
         gudangId: Int,
         namaGudang: String,
-        kodeGudang: String
+        kodeGudang: String,
+        jumlahRak: Int
     ) {
         prefs.edit()
             .putInt(KEY_GUDANG_ID, gudangId)
             .putString(KEY_GUDANG_NAMA, namaGudang)
             .putString(KEY_GUDANG_KODE, kodeGudang)
+            .putInt(KEY_GUDANG_JUMLAH_RAK, jumlahRak)
             .apply()
     }
 
-    fun hasActiveGudang(): Boolean =
-        prefs.contains(KEY_GUDANG_ID)
-
     fun getGudangNama(): String? =
         prefs.getString(KEY_GUDANG_NAMA, null)
-
-    fun getGudangKode(): String? =
-        prefs.getString(KEY_GUDANG_KODE, null)
-
-    fun getGudangId(): Int =
-        prefs.getInt(KEY_GUDANG_ID, -1)
 
     fun getGudangAktifId(): Int {
         return prefs.getInt(KEY_GUDANG_ID, -1)

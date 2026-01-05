@@ -13,9 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 class GudangAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<GudangAdapter.GudangViewHolder>() {
-
     private var listGudang = listOf<TableGudang>()
-
     inner class GudangViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvNama: TextView = itemView.findViewById(R.id.tv_nama_gudang)
         val tvAlamat: TextView = itemView.findViewById(R.id.tv_alamat)
@@ -33,15 +31,15 @@ class GudangAdapter(
 
         holder.tvNama.text = item.namaGudang
         holder.tvAlamat.text =
-            "${item.lokasiGudang}\n${item.kodeGudang}"
+            "${item.lokasiGudang}\n${item.kodeGudang}\nRak : ${item.jumlahRak}"
 
-        // ✅ PILIH GUDANG
         holder.itemView.setOnClickListener {
             val session = SessionManager(context)
             session.setActiveGudang(
                 item.idGudang,
                 item.namaGudang,
-                item.kodeGudang
+                item.kodeGudang,
+                item.jumlahRak
             )
 
             Toast.makeText(
@@ -50,20 +48,17 @@ class GudangAdapter(
                 Toast.LENGTH_SHORT
             ).show()
 
-            // 🔥 KUNCI UTAMA
             if (context is DaftarGudangActivity) {
                 context.finish()
             }
         }
 
-        // INFO BUTTON
         holder.btnInfo.setOnClickListener {
             val intent = Intent(context, DeskripsiGudangActivity::class.java)
             intent.putExtra("ID_GUDANG", item.idGudang)
             context.startActivity(intent)
         }
     }
-
 
     override fun getItemCount(): Int = listGudang.size
 

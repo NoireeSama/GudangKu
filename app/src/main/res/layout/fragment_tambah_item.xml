@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="22dp"
     android:fillViewport="true"
     android:background="@color/bg_grey">
 
@@ -21,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tambahitem"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/text_dark"
                 android:layout_centerInParent="true"/>
@@ -144,15 +145,16 @@
                     android:layout_width="32dp"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_launcher_foreground"
+                    android:src="@drawable/ic_add"
                     android:rotation="90"
+                    android:layout_marginTop="9dp"
                     app:tint="@color/text_grey"/> <ImageView
                 android:id="@+id/btn_qty_down"
                 android:layout_width="32dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_launcher_foreground"
-                android:rotation="270"
+                android:src="@drawable/ic_kurang"
+                android:rotation="180"
                 app:tint="@color/text_grey"/> </LinearLayout>
         </LinearLayout>
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="36dp"
     android:background="#F5F5F5">
     <ImageButton
         android:id="@+id/btnBack"
@@ -80,6 +81,7 @@
             app:cardElevation="4dp">
 
             <LinearLayout
+                android:id="@+id/cv_jumlah_gudang"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -94,9 +96,10 @@
                     android:textSize="12sp"/>
 
                 <TextView
+                    android:id="@+id/tv_jumlah_gudang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2"
+                    android:text="-"
                     android:textColor="#FFFFFF"
                     android:textSize="36sp"
                     android:textStyle="bold"/>
@@ -122,14 +125,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Jumlah Kendaraan"
+                    android:text="Jumlah Rak"
                     android:textColor="#666666"
                     android:textSize="12sp"/>
 
                 <TextView
+                    android:id="@+id/tv_jumlah_rak"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="14"
+                    android:text="-"
                     android:textColor="#333333"
                     android:textSize="36sp"
                     android:textStyle="bold"/>

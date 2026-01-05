@@ -15,7 +15,6 @@ class BarangKeluarActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tv_judul_halaman).text = "Barang Keluar"
         findViewById<ImageView>(R.id.btn_back).setOnClickListener { finish() }
 
-        // Setup RecyclerView & Dummy Data Keluar
         val rv = findViewById<RecyclerView>(R.id.rv_riwayat)
         val dataKeluar = listOf(
             ItemRiwayat("Indomie Goreng", "I001", 5, "Dus", "13:00"),

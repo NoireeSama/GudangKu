@@ -15,7 +15,6 @@ interface PersediaanDao {
     @Query("SELECT * FROM persediaan")
     suspend fun getAll(): List<TablePersediaan>
 
-    // ================= LIST UNTUK HOME & PERSEDIAAN =================
     @Query("""
         SELECT 
             p.id AS idPersediaan,
@@ -33,7 +32,6 @@ interface PersediaanDao {
     """)
     fun getPersediaanByGudang(idGudang: Int): Flow<List<PersediaanDetail>>
 
-    // ================= DETAIL ITEM =================
     @Query("""
         SELECT 
             p.id AS idPersediaan,
@@ -52,7 +50,6 @@ interface PersediaanDao {
     """)
     suspend fun getDetailItem(idPersediaan: Int): PersediaanDetail
 
-    // ================= UPDATE STOK =================
     @Query("""
         UPDATE persediaan 
         SET stok = :stok 
@@ -60,7 +57,6 @@ interface PersediaanDao {
     """)
     suspend fun updateStok(id: Int, stok: Int)
 
-    // ================= HOME SUMMARY =================
     @Query("""
         SELECT
             COUNT(p.id) AS totalBarang,
@@ -74,21 +70,45 @@ interface PersediaanDao {
     suspend fun getHomeSummary(idGudang: Int): HomeSummary
 
     @Query("""
-SELECT 
-    p.id AS idPersediaan,
-    b.id AS idBarang,
-    b.kodeBarang AS kodeBarang,
-    b.namaBarang AS namaBarang,
-    b.jenisBarang AS jenisBarang,
-    b.beratBarang AS beratBarang,
-    p.stok AS stok,
-    b.satuanBarang AS satuan,
-    b.deskripsiBarang AS deskripsiBarang
-FROM persediaan p
-JOIN barang b ON p.idBarang = b.id
-WHERE p.id = :idPersediaan
-LIMIT 1
-""")
+        SELECT 
+            p.id AS idPersediaan,
+            b.id AS idBarang,
+            g.idGudang AS idGudang,
+            g.namaGudang AS namaGudang,
+            b.kodeBarang AS kodeBarang,
+            b.namaBarang AS namaBarang,
+            b.jenisBarang AS jenisBarang,
+            b.beratBarang AS beratBarang,
+            p.stok AS stok,
+            b.satuanBarang AS satuan,
+            b.deskripsiBarang AS deskripsiBarang
+        FROM persediaan p
+        JOIN barang b ON p.idBarang = b.id
+        JOIN gudang g ON p.idGudang = g.idGudang
+        WHERE p.id = :idPersediaan
+        LIMIT 1
+    """)
     suspend fun getDetailByPersediaan(idPersediaan: Int): PersediaanDetail
 
+    @Query("""
+        SELECT 
+            p.id AS idPersediaan, 
+            p.idBarang, 
+            p.idGudang, 
+            p.stok, 
+            b.kodeBarang, 
+            b.namaBarang, 
+            b.jenisBarang, 
+            b.beratBarang, 
+            b.deskripsiBarang, 
+            b.satuanBarang AS satuan
+        FROM persediaan p
+        INNER JOIN barang b ON p.idBarang = b.id 
+        WHERE p.idBarang = :idBarang 
+        LIMIT 1
+    """)
+    suspend fun getDetailByBarang(idBarang: Int): PersediaanDetail
+
+    @Query("DELETE FROM persediaan WHERE idBarang = :idBarang AND idGudang = :idGudang")
+    suspend fun deleteByBarangDanGudang(idBarang: Int, idGudang: Int)
 }

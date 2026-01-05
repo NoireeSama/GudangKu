@@ -22,7 +22,6 @@ class RegisterActivity : AppCompatActivity() {
         val btnRegister = findViewById<Button>(R.id.btnRegisterAction)
         val btnLoginNav = findViewById<Button>(R.id.btnLoginNav)
 
-
         btnRegister.setOnClickListener {
 
             val username = etUsername.text.toString().trim()
@@ -81,7 +80,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         btnLoginNav.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
     }

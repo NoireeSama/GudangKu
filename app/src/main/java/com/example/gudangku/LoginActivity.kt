@@ -43,7 +43,6 @@ class LoginActivity : AppCompatActivity() {
                 runOnUiThread {
                     if (user != null) {
 
-                        // ✅ BUAT SESSION DI SINI
                         session.createLoginSession(
                             user.id,
                             user.username,
@@ -71,7 +70,6 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-
         btnRegisterNav.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
