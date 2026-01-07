@@ -21,7 +21,6 @@ class DeskripsiItemActivity : AppCompatActivity() {
     private lateinit var tvStok: TextView
     private lateinit var tvSatuan: TextView
     private lateinit var ivGambar: ImageView
-
     private var idPersediaan = -1
     private var idBarang = -1
 
@@ -94,7 +93,6 @@ class DeskripsiItemActivity : AppCompatActivity() {
         tvNama.text = detail.namaBarang
         tvStok.text = detail.stok.toString()
         tvSatuan.text = detail.satuan
-
         tvDetail.text = """
         Kode Barang : ${detail.kodeBarang}
         Jenis       : ${detail.jenisBarang}
@@ -105,7 +103,6 @@ class DeskripsiItemActivity : AppCompatActivity() {
         ${detail.deskripsiBarang.ifBlank { "-" }}
     """.trimIndent()
 
-        // Tampilkan gambar
         if (!detail.gambar.isNullOrEmpty()) {
             Glide.with(this)
                 .load(detail.gambar)

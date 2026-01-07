@@ -46,6 +46,7 @@ class PersediaanFragment : Fragment() {
                 .collect { listBarang ->
                     adapter.updateData(listBarang)
                 }
+
         }
     }
 }

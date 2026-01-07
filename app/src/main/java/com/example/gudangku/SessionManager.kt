@@ -17,6 +17,8 @@ class SessionManager(context: Context) {
         const val KEY_GUDANG_NAMA = "gudang_nama"
         const val KEY_GUDANG_KODE = "gudang_kode"
         const val KEY_GUDANG_JUMLAH_RAK = "gudang_jumlah_rak"
+        const val KEY_DISPLAY_NAME = "display_name"
+        const val KEY_FOTO = "foto"
     }
 
     fun createLoginSession(
@@ -30,6 +32,10 @@ class SessionManager(context: Context) {
             .putString(KEY_USERNAME, username)
             .putString(KEY_EMAIL, email)
             .apply()
+    }
+
+    fun getUserId(): Int {
+        return prefs.getInt(KEY_USER_ID, 0)
     }
 
     fun isLoggedIn(): Boolean =
@@ -68,4 +74,16 @@ class SessionManager(context: Context) {
     fun getGudangAktifId(): Int {
         return prefs.getInt(KEY_GUDANG_ID, -1)
     }
+
+    fun saveUser(id: Int, username: String, email: String, displayName: String, foto: String?) {
+        prefs.edit()
+            .putInt(KEY_USER_ID, id)
+            .putString(KEY_USERNAME, username)
+            .putString(KEY_EMAIL, email)
+            .putString(KEY_DISPLAY_NAME, displayName)
+            .putString(KEY_FOTO, foto ?: "")
+            .apply()
+    }
+
+    fun getFoto(): String? = prefs.getString(KEY_FOTO, null)
 }

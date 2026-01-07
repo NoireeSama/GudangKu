@@ -15,6 +15,8 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
 
 class TambahItemFragment : Fragment() {
 
@@ -28,7 +30,6 @@ class TambahItemFragment : Fragment() {
     private lateinit var ivProduk: ImageView
     private lateinit var btnUploadGambar: Button
     private var selectedImageUri: Uri? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -132,6 +133,8 @@ class TambahItemFragment : Fragment() {
 
             lifecycleScope.launch(Dispatchers.IO) {
 
+                val gambarPath = selectedImageUri?.let { saveImageToInternal(it) }
+
                 val barangId = db.barangDao().insert(
                     TableBarang(
                         kodeBarang = kode,
@@ -140,7 +143,7 @@ class TambahItemFragment : Fragment() {
                         beratBarang = berat,
                         deskripsiBarang = deskripsiGabungan,
                         satuanBarang = "pcs",
-                        gambar = selectedImageUri?.toString()
+                        gambar = gambarPath
                     )
                 ).toInt()
 
@@ -151,6 +154,10 @@ class TambahItemFragment : Fragment() {
                         stok = jumlah
                     )
                 )
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Item berhasil ditambahkan", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.popBackStack()
+                }
 
                 val sessionManager = SessionManager(requireContext())
                 val namaGudang = sessionManager.getGudangNama() ?: "Gudang"
@@ -180,19 +187,24 @@ class TambahItemFragment : Fragment() {
             }
         }
     }
-    private fun pickImageFromGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, IMAGE_PICK_CODE)
+
+    private fun saveImageToInternal(uri: Uri): String {
+        val input = requireContext().contentResolver.openInputStream(uri)!!
+        val file = File(requireContext().filesDir, "produk_${System.currentTimeMillis()}.jpg")
+        val output = FileOutputStream(file)
+        input.copyTo(output)
+        input.close()
+        output.close()
+        return file.absolutePath
     }
 
-    companion object {
-        private const val IMAGE_PICK_CODE = 1001
+    private fun pickImageFromGallery() {
+        startActivityForResult(Intent(Intent.ACTION_PICK).apply { type = "image/*" }, 1001)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
+        if (resultCode == Activity.RESULT_OK && requestCode == 1001) {
             selectedImageUri = data?.data
             ivProduk.setImageURI(selectedImageUri)
         }

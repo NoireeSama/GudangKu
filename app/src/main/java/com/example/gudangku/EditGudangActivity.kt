@@ -15,7 +15,6 @@ class EditGudangActivity : AppCompatActivity() {
     private lateinit var etJumlahRak: EditText
     private lateinit var layoutDynamicInputs: LinearLayout
     private val dynamicEditTexts = mutableListOf<EditText>()
-
     private var idGudang = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +39,6 @@ class EditGudangActivity : AppCompatActivity() {
 
         val db = GudangKuDatabase.getInstance(this)
 
-        // Ambil data gudang dari DB
         lifecycleScope.launch {
             val gudang = db.gudangDao().getById(idGudang)
             gudang?.let {
@@ -48,18 +46,13 @@ class EditGudangActivity : AppCompatActivity() {
                 etNamaGudang.setText(it.namaGudang)
                 etLokasiGudang.setText(it.lokasiGudang)
                 etJumlahRak.setText(it.jumlahRak.toString())
-                // Kalau mau deskripsi tambahan ada, bisa split dan add di EditText dinamis
-                // it.deskripsiGudang?.split("\n")?.forEach { desc -> addNewDescriptionField(desc) }
             }
         }
 
-        // Tombol tambah deskripsi baru (opsional)
         btnAddDesc.setOnClickListener { addNewDescriptionField() }
 
-        // Tombol simpan
         btnSimpan.setOnClickListener { saveData() }
 
-        // Tombol back
         findViewById<ImageView>(R.id.btn_back).setOnClickListener { finish() }
     }
 

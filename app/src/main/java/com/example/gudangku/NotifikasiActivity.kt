@@ -28,6 +28,7 @@ class NotifikasiActivity : AppCompatActivity() {
                 .collectLatest { data ->
                     rv.adapter = LogAdapter(data)
                 }
+
         }
     }
 }
