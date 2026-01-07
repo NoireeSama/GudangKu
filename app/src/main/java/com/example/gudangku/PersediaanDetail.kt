@@ -9,5 +9,6 @@ data class PersediaanDetail(
     val beratBarang: Double,
     var stok: Int,
     val satuan: String,
-    val deskripsiBarang: String
+    val deskripsiBarang: String,
+    val gambar: String?
 )

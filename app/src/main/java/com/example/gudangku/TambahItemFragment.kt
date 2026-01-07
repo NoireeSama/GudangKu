@@ -1,5 +1,8 @@
 package com.example.gudangku
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +15,8 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
 
 class TambahItemFragment : Fragment() {
 
@@ -22,6 +27,9 @@ class TambahItemFragment : Fragment() {
     private lateinit var etBerat: EditText
     private lateinit var etJenis: EditText
     private lateinit var switchJumlah: SwitchCompat
+    private lateinit var ivProduk: ImageView
+    private lateinit var btnUploadGambar: Button
+    private var selectedImageUri: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +40,12 @@ class TambahItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        ivProduk = view.findViewById(R.id.iv_produk)
+        btnUploadGambar = view.findViewById(R.id.btn_upload_gambar)
+        btnUploadGambar.setOnClickListener {
+            pickImageFromGallery()
+        }
 
         etJumlah = view.findViewById(R.id.et_jumlah_produk)
         etKode = view.findViewById(R.id.et_kode_item)
@@ -119,6 +133,8 @@ class TambahItemFragment : Fragment() {
 
             lifecycleScope.launch(Dispatchers.IO) {
 
+                val gambarPath = selectedImageUri?.let { saveImageToInternal(it) }
+
                 val barangId = db.barangDao().insert(
                     TableBarang(
                         kodeBarang = kode,
@@ -126,7 +142,8 @@ class TambahItemFragment : Fragment() {
                         jenisBarang = jenis,
                         beratBarang = berat,
                         deskripsiBarang = deskripsiGabungan,
-                        satuanBarang = "pcs"
+                        satuanBarang = "pcs",
+                        gambar = gambarPath
                     )
                 ).toInt()
 
@@ -137,6 +154,10 @@ class TambahItemFragment : Fragment() {
                         stok = jumlah
                     )
                 )
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Item berhasil ditambahkan", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.popBackStack()
+                }
 
                 val sessionManager = SessionManager(requireContext())
                 val namaGudang = sessionManager.getGudangNama() ?: "Gudang"
@@ -164,6 +185,28 @@ class TambahItemFragment : Fragment() {
                     parentFragmentManager.popBackStack()
                 }
             }
+        }
+    }
+
+    private fun saveImageToInternal(uri: Uri): String {
+        val input = requireContext().contentResolver.openInputStream(uri)!!
+        val file = File(requireContext().filesDir, "produk_${System.currentTimeMillis()}.jpg")
+        val output = FileOutputStream(file)
+        input.copyTo(output)
+        input.close()
+        output.close()
+        return file.absolutePath
+    }
+
+    private fun pickImageFromGallery() {
+        startActivityForResult(Intent(Intent.ACTION_PICK).apply { type = "image/*" }, 1001)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == 1001) {
+            selectedImageUri = data?.data
+            ivProduk.setImageURI(selectedImageUri)
         }
     }
 }

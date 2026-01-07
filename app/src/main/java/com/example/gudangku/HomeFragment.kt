@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,11 +15,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.coroutines.flow.collect
 
 class HomeFragment : Fragment() {
     private lateinit var session: SessionManager
     private lateinit var db: GudangKuDatabase
+    private var tvUsername: TextView? = null
+    private var ivProfile: ImageView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,8 +42,9 @@ class HomeFragment : Fragment() {
             return
         }
 
-        // VIEW
-        val tvUsername = view.findViewById<TextView>(R.id.tv_username)
+        tvUsername = view.findViewById(R.id.tv_username)
+        tvUsername?.text = session.getDisplayName()
+
         val tvNamaGudang = view.findViewById<TextView>(R.id.tv_nama_gudang)
         val tvAlamatGudang = view.findViewById<TextView>(R.id.tv_alamat_gudang)
 
@@ -55,10 +56,17 @@ class HomeFragment : Fragment() {
         val rvBarang = view.findViewById<RecyclerView>(R.id.rv_barang)
         rvBarang.layoutManager = LinearLayoutManager(requireContext())
         val tvInfo = view.findViewById<TextView>(R.id.tv_stock_info)
+        ivProfile = view.findViewById(R.id.img_profile)
 
-        tvUsername.text = session.getDisplayName()
+        val foto = session.getFoto()
+        if (!foto.isNullOrEmpty()) {
+            ivProfile?.setImageURI(android.net.Uri.parse(foto))
+        } else {
+            ivProfile?.setImageResource(R.drawable.ic_launcher_background)
+        }
 
-        // LOAD DATA
+        tvUsername?.text = session.getDisplayName()
+
         loadHomeData(
             tvNamaGudang,
             tvAlamatGudang,
@@ -70,7 +78,6 @@ class HomeFragment : Fragment() {
             tvInfo
         )
 
-        // NAV
         view.findViewById<View>(R.id.btnHalamanUser).setOnClickListener {
             startActivity(Intent(requireContext(), ProfileActivity::class.java)
             )
@@ -90,6 +97,14 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        tvUsername?.text = session.getDisplayName()
+        val foto = session.getFoto()
+        if (!foto.isNullOrEmpty()) {
+            ivProfile?.setImageURI(android.net.Uri.parse(foto))
+        } else {
+            ivProfile?.setImageResource(R.drawable.ic_launcher_background)
+        }
+
         view?.let {
             loadHomeData(
                 it.findViewById(R.id.tv_nama_gudang),
@@ -168,5 +183,11 @@ class HomeFragment : Fragment() {
                 }
 
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        tvUsername = null
+        ivProfile = null
     }
 }

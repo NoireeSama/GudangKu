@@ -10,15 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- Layer UI di atas kamera -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#66000000">
 
-        <!-- Semua komponen UI lama kamu pindahkan ke sini -->
-
-        <!-- TITLE -->
         <TextView
             android:id="@+id/tv_title_qr"
             android:layout_width="wrap_content"
@@ -31,27 +27,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <!-- CLOSE -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/btn_close_qr"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="@color/white"
-            android:layout_marginTop="48dp"
-            android:layout_marginStart="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_qr">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@android:drawable/ic_delete"
-                android:padding="12dp"
-                app:tint="@color/text_dark"/>
-        </androidx.cardview.widget.CardView>
-
-        <!-- FRAME SCAN -->
         <RelativeLayout
             android:layout_width="250dp"
             android:layout_height="250dp"
@@ -60,11 +35,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <!-- garis-garis frame -->
-            <!-- (isi sama seperti sebelumnya) -->
         </RelativeLayout>
 
-        <!-- BOTTOM TEXT -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -76,5 +48,4 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </FrameLayout>

@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,7 +20,7 @@ class DeskripsiItemActivity : AppCompatActivity() {
     private lateinit var tvDetail: TextView
     private lateinit var tvStok: TextView
     private lateinit var tvSatuan: TextView
-
+    private lateinit var ivGambar: ImageView
     private var idPersediaan = -1
     private var idBarang = -1
 
@@ -31,6 +32,7 @@ class DeskripsiItemActivity : AppCompatActivity() {
         val btnEdit = findViewById<Button>(R.id.btn_edit_persediaan)
         val btnHapus = findViewById<Button>(R.id.btn_hapus)
 
+        ivGambar = findViewById(R.id.iv_gambar_barang)
         tvNama = findViewById(R.id.tv_nama_barang)
         tvDetail = findViewById(R.id.tv_detail_barang)
         tvStok = findViewById(R.id.tv_stok)
@@ -91,16 +93,24 @@ class DeskripsiItemActivity : AppCompatActivity() {
         tvNama.text = detail.namaBarang
         tvStok.text = detail.stok.toString()
         tvSatuan.text = detail.satuan
-
         tvDetail.text = """
-            Kode Barang : ${detail.kodeBarang}
-            Jenis       : ${detail.jenisBarang}
-            Berat/item  : ${detail.beratBarang}
-            Total berat : ${detail.beratBarang * detail.stok}
-            
-            Deskripsi:
-            ${detail.deskripsiBarang.ifBlank { "-" }}
-        """.trimIndent()
+        Kode Barang : ${detail.kodeBarang}
+        Jenis       : ${detail.jenisBarang}
+        Berat/item  : ${detail.beratBarang}
+        Total berat : ${detail.beratBarang * detail.stok}
+        
+        Deskripsi:
+        ${detail.deskripsiBarang.ifBlank { "-" }}
+    """.trimIndent()
+
+        if (!detail.gambar.isNullOrEmpty()) {
+            Glide.with(this)
+                .load(detail.gambar)
+                .placeholder(R.drawable.ic_launcher_background)
+                .into(ivGambar)
+        } else {
+            ivGambar.setImageResource(R.drawable.ic_launcher_background)
+        }
     }
 
     private fun hapusItem() {

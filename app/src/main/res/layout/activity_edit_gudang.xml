@@ -39,6 +39,7 @@
             android:layout_marginBottom="16dp"/>
 
         <EditText
+            android:id="@+id/et_edit_kode"
             android:hint="Kode Gudang"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -47,6 +48,7 @@
             android:layout_marginBottom="12dp"/>
 
         <EditText
+            android:id="@+id/et_edit_nama_gudang"
             android:hint="Nama Gudang"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -55,6 +57,7 @@
             android:layout_marginBottom="12dp"/>
 
         <EditText
+            android:id="@+id/et_edit_lokasi"
             android:hint="Lokasi Gudang"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -71,7 +74,7 @@
             android:orientation="horizontal">
 
             <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Jumlah Rak"/>
-            <TextView android:text="0" android:textSize="16sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            <EditText android:id="@+id/et_edit_jumlah_rak" android:text="0" android:textSize="16sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <TextView

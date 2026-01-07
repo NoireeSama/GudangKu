@@ -61,7 +61,8 @@ class RegisterActivity : AppCompatActivity() {
                                 TableUser(
                                     username = username,
                                     email = email,
-                                    password = password
+                                    password = password,
+                                    foto = ""
                                 )
                             )
 

@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.LinearLayout
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
@@ -19,6 +20,15 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
 
         session = SessionManager(this)
+
+        val ivProfilePic = findViewById<ImageView>(R.id.ivProfilePic)
+
+        val foto = session.getFoto()
+        if (!foto.isNullOrEmpty()) {
+            ivProfilePic.setImageURI(android.net.Uri.parse(foto))
+        } else {
+            ivProfilePic.setImageResource(R.drawable.ic_launcher_background)
+        }
 
         val tvUserName = findViewById<TextView>(R.id.tvUserName)
         tvUserName.text = session.getUsername()
@@ -63,6 +73,9 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.btnEditProfile).setOnClickListener {
+            val intent = Intent(this, EditUserActivity::class.java)
+            intent.putExtra("USER_ID", session.getUserId())
+            startActivity(intent)
         }
     }
 }

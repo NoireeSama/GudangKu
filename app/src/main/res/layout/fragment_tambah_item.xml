@@ -50,6 +50,23 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
+                <ImageView
+                    android:id="@+id/iv_produk"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="16dp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/bg_input_field"
+                    android:contentDescription="Gambar Produk" />
+                <Button
+                    android:id="@+id/btn_upload_gambar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Upload Gambar"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="12dp" />
+
+
                 <TextView android:text="Kode Item" android:textColor="@color/primary_blue" android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="4dp"/>
                 <EditText
                     android:id="@+id/et_kode_item"
