@@ -12,5 +12,6 @@ data class TableBarang(
     val jenisBarang: String,
     val beratBarang: Float,
     val deskripsiBarang: String,
-    val satuanBarang: String
+    val satuanBarang: String,
+    val gambar: String?
 )

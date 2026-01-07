@@ -25,7 +25,8 @@ interface PersediaanDao {
             b.beratBarang AS beratBarang,
             p.stok AS stok,
             b.satuanBarang AS satuan,
-            b.deskripsiBarang AS deskripsiBarang
+            b.deskripsiBarang AS deskripsiBarang,
+            b.gambar AS gambar
         FROM persediaan p
         JOIN barang b ON p.idBarang = b.id
         WHERE p.idGudang = :idGudang
@@ -42,7 +43,8 @@ interface PersediaanDao {
             b.beratBarang AS beratBarang,
             p.stok AS stok,
             b.satuanBarang AS satuan,
-            b.deskripsiBarang AS deskripsiBarang
+            b.deskripsiBarang AS deskripsiBarang,
+            b.gambar AS gambar
         FROM persediaan p
         JOIN barang b ON p.idBarang = b.id
         WHERE p.id = :idPersediaan
@@ -81,7 +83,8 @@ interface PersediaanDao {
             b.beratBarang AS beratBarang,
             p.stok AS stok,
             b.satuanBarang AS satuan,
-            b.deskripsiBarang AS deskripsiBarang
+            b.deskripsiBarang AS deskripsiBarang,
+            b.gambar AS gambar
         FROM persediaan p
         JOIN barang b ON p.idBarang = b.id
         JOIN gudang g ON p.idGudang = g.idGudang
@@ -101,7 +104,8 @@ interface PersediaanDao {
             b.jenisBarang, 
             b.beratBarang, 
             b.deskripsiBarang, 
-            b.satuanBarang AS satuan
+            b.satuanBarang AS satuan,
+            b.gambar AS gambar
         FROM persediaan p
         INNER JOIN barang b ON p.idBarang = b.id 
         WHERE p.idBarang = :idBarang 

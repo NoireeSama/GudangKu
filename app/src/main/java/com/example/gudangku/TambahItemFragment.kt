@@ -1,5 +1,8 @@
 package com.example.gudangku
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +25,10 @@ class TambahItemFragment : Fragment() {
     private lateinit var etBerat: EditText
     private lateinit var etJenis: EditText
     private lateinit var switchJumlah: SwitchCompat
+    private lateinit var ivProduk: ImageView
+    private lateinit var btnUploadGambar: Button
+    private var selectedImageUri: Uri? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +39,12 @@ class TambahItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        ivProduk = view.findViewById(R.id.iv_produk)
+        btnUploadGambar = view.findViewById(R.id.btn_upload_gambar)
+        btnUploadGambar.setOnClickListener {
+            pickImageFromGallery()
+        }
 
         etJumlah = view.findViewById(R.id.et_jumlah_produk)
         etKode = view.findViewById(R.id.et_kode_item)
@@ -126,7 +139,8 @@ class TambahItemFragment : Fragment() {
                         jenisBarang = jenis,
                         beratBarang = berat,
                         deskripsiBarang = deskripsiGabungan,
-                        satuanBarang = "pcs"
+                        satuanBarang = "pcs",
+                        gambar = selectedImageUri?.toString()
                     )
                 ).toInt()
 
@@ -164,6 +178,23 @@ class TambahItemFragment : Fragment() {
                     parentFragmentManager.popBackStack()
                 }
             }
+        }
+    }
+    private fun pickImageFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, IMAGE_PICK_CODE)
+    }
+
+    companion object {
+        private const val IMAGE_PICK_CODE = 1001
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
+            selectedImageUri = data?.data
+            ivProduk.setImageURI(selectedImageUri)
         }
     }
 }
