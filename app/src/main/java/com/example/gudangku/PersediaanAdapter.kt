@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,6 +29,7 @@ class PersediaanAdapter(
         val btnPlus: ImageView = itemView.findViewById(R.id.btn_plus)
         val btnMinus: ImageView = itemView.findViewById(R.id.btn_minus)
         val cardRoot: CardView = itemView.findViewById(R.id.card_root)
+        val imgProduk: ImageView = itemView.findViewById(R.id.img_produk)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersediaanViewHolder {
@@ -51,6 +53,17 @@ class PersediaanAdapter(
         holder.cardRoot.setCardBackgroundColor(
             ContextCompat.getColor(context, colorResId)
         )
+
+        if (!item.gambar.isNullOrEmpty()) {
+            Glide.with(context)
+                .load(item.gambar)
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_background)
+                .into(holder.imgProduk)
+        } else {
+            holder.imgProduk.setImageResource(R.drawable.ic_launcher_background)
+        }
+
 
         holder.cardRoot.setOnClickListener {
             val intent = Intent(context, DeskripsiItemActivity::class.java)
