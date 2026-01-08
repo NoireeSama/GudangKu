@@ -3,7 +3,6 @@ package com.example.gudangku
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
@@ -14,7 +13,6 @@ class EditGudangActivity : AppCompatActivity() {
     private lateinit var etLokasiGudang: EditText
     private lateinit var etJumlahRak: EditText
     private lateinit var layoutDynamicInputs: LinearLayout
-    private val dynamicEditTexts = mutableListOf<EditText>()
     private var idGudang = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +25,6 @@ class EditGudangActivity : AppCompatActivity() {
         etJumlahRak = findViewById(R.id.et_edit_jumlah_rak)
         layoutDynamicInputs = findViewById(R.id.layout_dynamic_inputs)
 
-        val btnAddDesc = findViewById<TextView>(R.id.btn_add_description_field)
         val btnSimpan = findViewById<TextView>(R.id.btn_simpan_perubahan)
 
         idGudang = intent.getIntExtra("GUDANG_ID", -1)
@@ -49,29 +46,9 @@ class EditGudangActivity : AppCompatActivity() {
             }
         }
 
-        btnAddDesc.setOnClickListener { addNewDescriptionField() }
-
         btnSimpan.setOnClickListener { saveData() }
 
         findViewById<ImageView>(R.id.btn_back).setOnClickListener { finish() }
-    }
-
-    private fun addNewDescriptionField(text: String = "") {
-        val newEditText = EditText(this)
-        val params = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            150
-        )
-        params.setMargins(0, 0, 0, 30)
-        newEditText.layoutParams = params
-        newEditText.hint = "Deskripsi Tambahan..."
-        newEditText.setPadding(30, 30, 30, 30)
-        newEditText.background = ContextCompat.getDrawable(this, R.drawable.bg_input_field)
-        newEditText.textSize = 14f
-        newEditText.setText(text)
-
-        layoutDynamicInputs.addView(newEditText)
-        dynamicEditTexts.add(newEditText)
     }
 
     private fun saveData() {

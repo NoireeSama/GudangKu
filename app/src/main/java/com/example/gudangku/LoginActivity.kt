@@ -46,7 +46,9 @@ class LoginActivity : AppCompatActivity() {
                         session.createLoginSession(
                             user.id,
                             user.username,
-                            user.email
+                            user.email,
+                            user.username,
+                            user.foto
                         )
 
                         Toast.makeText(

@@ -24,7 +24,9 @@ class SessionManager(context: Context) {
     fun createLoginSession(
         userId: Int,
         username: String,
-        email: String
+        email: String,
+        displayName: String,
+        foto: String?
     ) {
         prefs.edit()
             .putBoolean(KEY_IS_LOGGED_IN, true)
