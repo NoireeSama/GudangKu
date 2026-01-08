@@ -1,6 +1,7 @@
 package com.example.gudangku
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
@@ -25,9 +26,23 @@ class ProfileActivity : AppCompatActivity() {
 
         val foto = session.getFoto()
         if (!foto.isNullOrEmpty()) {
-            ivProfilePic.setImageURI(android.net.Uri.parse(foto))
+            ivProfilePic.setImageURI(Uri.parse(foto))
         } else {
-            ivProfilePic.setImageResource(R.drawable.ic_launcher_background)
+            lifecycleScope.launch {
+                val user = GudangKuDatabase.getInstance(this@ProfileActivity)
+                    .userDao().getById(session.getUserId())
+
+                user?.foto?.let {
+                    ivProfilePic.setImageURI(Uri.parse(it))
+                    session.saveUser(
+                        id = user.id,
+                        username = user.username,
+                        email = user.email,
+                        displayName = user.username,
+                        foto = it
+                    )
+                }
+            }
         }
 
         val tvUserName = findViewById<TextView>(R.id.tvUserName)
