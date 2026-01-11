@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:padding="24dp">
+
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_back"
+        app:tint="@color/text_dark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:text="Kebijakan Pengguna"
+        android:textColor="@color/text_dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/btn_back"
+        app:layout_constraintStart_toEndOf="@id/btn_back"
+        app:layout_constraintTop_toTopOf="@id/btn_back"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Privasi &amp; Ketentuan Layanan"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary_blue"
+                android:layout_marginBottom="12dp"/>
+
+            <TextView
+                android:id="@+id/tv_policy_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/text_dark"
+                android:lineSpacingExtra="6dp"
+                android:justificationMode="inter_word"
+                android:text="1. Pendahuluan\nSelamat datang di aplikasi GudangKu. Aplikasi ini dikembangkan untuk membantu proses manajemen stok barang secara efisien dan akurat. Dengan menggunakan aplikasi ini, Anda menyetujui ketentuan yang berlaku.\n\n2. Pengumpulan Data\nUntuk menunjang fungsionalitas aplikasi, kami merekam data sebagai berikut:\n• Data Profil: Username dan Email untuk identifikasi sesi login.\n• Data Inventaris: Nama barang, jumlah stok, kategori, dan riwayat mutasi barang yang Anda inputkan.\n\n3. Penyimpanan Data (Hybrid System)\nAplikasi ini menggunakan teknologi Hybrid Storage untuk memastikan data Anda aman:\n• Mode Offline: Data disimpan di penyimpanan lokal perangkat (Room Database) sehingga aplikasi tetap berjalan lancar tanpa internet.\n• Sinkronisasi Cloud: Saat perangkat terhubung ke internet, data akan disinkronkan ke server pusat menggunakan koneksi aman (Retrofit/API).\n\n4. Keamanan Akun\nKeamanan data adalah prioritas kami. Password pengguna dienkripsi sebelum dikirim ke server. Pengguna bertanggung jawab penuh untuk menjaga kerahasiaan kredensial login masing-masing.\n\n5. Batasan Tanggung Jawab\nPengembang tidak bertanggung jawab atas kesalahan pencatatan stok fisik yang disebabkan oleh kelalaian input pengguna (human error).\n\n6. Kontak Pengembang\nJika Anda menemukan bug atau kendala teknis, silakan hubungi:\nAditya Permana (Developer)\nEmail: aditya@students.amikom.ac.id"
+                tools:targetApi="o" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

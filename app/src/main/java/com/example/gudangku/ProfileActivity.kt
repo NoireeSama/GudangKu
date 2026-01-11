@@ -81,10 +81,9 @@ class ProfileActivity : AppCompatActivity() {
 
         }
 
-        findViewById<Button>(R.id.btnHelp).setOnClickListener {
-        }
-
         findViewById<Button>(R.id.btnPolicy).setOnClickListener {
+            val intent = Intent(this, PolicyActivity::class.java)
+            startActivity(intent)
         }
 
         findViewById<Button>(R.id.btnEditProfile).setOnClickListener {

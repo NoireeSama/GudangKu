@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GudangKu">
         <activity
+            android:name=".PolicyActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditUserActivity"
             android:exported="false" />
         <activity
